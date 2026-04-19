@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FlowDefinitionApiName</fullName>
+    <inlineHelpText>In Setup, go to Flows. Open the flow and then click View properties. Copy the Flow API Name.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

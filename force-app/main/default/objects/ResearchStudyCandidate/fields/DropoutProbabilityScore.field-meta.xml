@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DropoutProbabilityScore</fullName>
+    <inlineHelpText>The predicted score for potential candidate dropouts during the clinical trial.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Research_Study_Candidates</fullName>
+    <columns>Name</columns>
+    <columns>ResearchStudy</columns>
+    <columns>Candidate</columns>
+    <columns>CareProgramSite</columns>
+    <columns>Status</columns>
+    <filterScope>Mine</filterScope>
+    <label>All Research Study Candidates</label>
+</ListView>

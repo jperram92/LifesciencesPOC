@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UsageType</fullName>
+    <inlineHelpText>The usage type of the scheduling priority in an application or cloud.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

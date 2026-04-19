@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ActlFstPtcpFstVstDate</fullName>
+    <inlineHelpText>The actual date when the first enrolled participant across all sites had their initial study visit, as specified in the study protocol.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

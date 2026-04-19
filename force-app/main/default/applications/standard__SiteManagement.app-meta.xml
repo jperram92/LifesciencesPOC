@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#0070D2</headerColor>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>The modular workspace that provides easy access to the Site Management features.</description>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
+    <label>Site Selection</label>
+    <navType>Console</navType>
+    <tabs>standard-home</tabs>
+    <tabs>standard-ResearchStudy</tabs>
+    <tabs>standard-CareProgramSite</tabs>
+    <tabs>standard-HealthcareProvider</tabs>
+    <tabs>standard-HealthcareFacility</tabs>
+    <tabs>standard-Assessment</tabs>
+    <tabs>standard-CriteriaBasedSearchAndFilter</tabs>
+    <tabs>standard-CareSiteIstgrSearchableFld</tabs>
+    <tabs>standard-OmniScriptView</tabs>
+    <uiType>Lightning</uiType>
+    <workspaceConfig>
+        <mappings>
+            <tab>standard-Assessment</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-CareProgramSite</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-CareSiteIstgrSearchableFld</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-CriteriaBasedSearchAndFilter</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-HealthcareFacility</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-HealthcareProvider</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-OmniScriptView</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-ResearchStudy</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-home</tab>
+        </mappings>
+    </workspaceConfig>
+</CustomApplication>

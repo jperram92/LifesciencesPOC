@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Filter_Crieria_is_must</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL(NavigationType__c , &apos;standard__recordPage&apos;) &amp;&amp; ISBLANK( Filter_Criteria__c )</errorConditionFormula>
+    <errorDisplayField>Filter_Criteria__c</errorDisplayField>
+    <errorMessage>Please enter filter criteria i.e.where clause to fetch the exact record</errorMessage>
+</ValidationRule>

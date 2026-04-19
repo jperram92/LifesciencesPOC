@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Classification</fullName>
+    <inlineHelpText>Specifies the classification of the healthcare provider, such as Previous Partner, Key Opinion Leader, and Novice Member.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+</CustomField>

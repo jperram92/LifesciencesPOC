@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AvgInvtglProductReleaseDrtn</fullName>
+    <inlineHelpText>The average duration between the start of the site activation process to the release of the investigational product at the site.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

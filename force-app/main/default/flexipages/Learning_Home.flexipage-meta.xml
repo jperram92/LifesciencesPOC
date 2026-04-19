@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>app_description</name>
+                    <value>Here&apos;s a collection of resources to help you get started.</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>app_welcome_text</name>
+                    <value>Welcome to Life Sciences Cloud Trial Org</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>page_Name</name>
+                    <value>LandingPage</value>
+                </componentInstanceProperties>
+                <componentName>inAppLanding</componentName>
+                <identifier>c_inAppLanding</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>top</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <name>bottomLeft</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <name>bottomRight</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <name>sidebar</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>Learning Home</masterLabel>
+    <template>
+        <name>home:desktopTemplate</name>
+    </template>
+    <type>HomePage</type>
+</FlexiPage>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Clinical_Encounters</fullName>
+    <columns>Name</columns>
+    <columns>Patient</columns>
+    <columns>StartDate</columns>
+    <columns>EndDate</columns>
+    <columns>Status</columns>
+    <columns>Priority</columns>
+    <columns>Category</columns>
+    <columns>Facility</columns>
+    <filterScope>Mine</filterScope>
+    <label>All Clinical Encounters</label>
+</ListView>

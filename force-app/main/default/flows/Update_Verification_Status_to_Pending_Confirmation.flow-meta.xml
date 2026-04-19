@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <description>Sets the error message that the flow returns when there’s an error updating the assessment envelope record.</description>
+        <name>SetErrorMessageUpdateAssessmentEnvelope</name>
+        <label>Set Error Message</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <customErrorMessages>
+            <errorMessage>{!UpdateAssessmentEnvelopeErrorTextTemplate}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>Sets the error message that the flow returns when there’s an error updating the care benefit verify request record.</description>
+        <name>SetErrorMessageUpdateCareBenefitVerifyRequest</name>
+        <label>Set Error Message</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <customErrorMessages>
+            <errorMessage>{!UpdateCareBenefitVerifyRequestFailedTextTemplate}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <description>Determines whether a care benefit verify request record exists by checking if the CareBenefitVerifyRequest variable has an ID.</description>
+        <name>HaveCareBenefitVerifyRequestRecord</name>
+        <label>Have Care Benefit Verify Request Record?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CareBenefitVerifyRequest.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CareBenefitVerifyRequest.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pending</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateCareBenefitVerifyRequest</targetReference>
+            </connector>
+            <label>HasCareBenefitVerifyRequestRecord</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <description>Gets the name of the care benefit verify request from the Subject field of the record that triggered the flow.</description>
+        <name>CareBenefitVerifyRequestNameFormula</name>
+        <dataType>String</dataType>
+        <expression>MID({!$Record.Subject}, 2, 9)</expression>
+    </formulas>
+    <interviewLabel>Update Verification Status to Pending Confirmation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Verification Status to Pending Confirmation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Gets the care benefit verify request record with a Name that matches CareBenefitVerifyRequestNameFormula. Stores the ID of the result in the CareBenefitVerifyRequest record variable.</description>
+        <name>GetCareBenefitVerifyRequest</name>
+        <label>Get Care Benefit Verify Request</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>HaveCareBenefitVerifyRequestRecord</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CareBenefitVerifyRequestNameFormula</elementReference>
+            </value>
+        </filters>
+        <object>CareBenefitVerifyRequest</object>
+        <outputReference>CareBenefitVerifyRequest</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status</queriedFields>
+    </recordLookups>
+    <recordUpdates>
+        <description>Updates the assessment envelope record with a RequestReferenceId that matches the Care Benefit Verify Request ID in CareBenefitVerifyRequest, setting the notification status to Sent.</description>
+        <name>UpdateAssessmentEnvelope</name>
+        <label>Update Assessment Envelope</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>SetErrorMessageUpdateAssessmentEnvelope</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RequestReferenceId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CareBenefitVerifyRequest.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>NotificationStatus</field>
+            <value>
+                <stringValue>Sent</stringValue>
+            </value>
+        </inputAssignments>
+        <object>AssessmentEnvelope</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Updates the care benefit verify request record with an Name matching CareBenefitVerifyRequestNameFormula, setting the status to Pending Confirmation.</description>
+        <name>UpdateCareBenefitVerifyRequest</name>
+        <label>Update Care Benefit Verify Request</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>UpdateAssessmentEnvelope</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>SetErrorMessageUpdateCareBenefitVerifyRequest</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CareBenefitVerifyRequestNameFormula</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>PendingConfirmation</stringValue>
+            </value>
+        </inputAssignments>
+        <object>CareBenefitVerifyRequest</object>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>GetCareBenefitVerifyRequest</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Subject</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>[DO NOT EDIT]</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>3</stringValue>
+            </value>
+        </filters>
+        <object>EmailMessage</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Stores the text template that contains the message that’s displayed to the flow user when there’s an error updating the assessment envelope record.</description>
+        <name>UpdateAssessmentEnvelopeErrorTextTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>Something went wrong and we couldn’t update the assessment envelope record.</text>
+    </textTemplates>
+    <textTemplates>
+        <description>Stores Care Benefit Verify Request status update failure</description>
+        <name>UpdateCareBenefitVerifyRequestFailedTextTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>Something went wrong and we couldn’t update the care benefit verify request record.</text>
+    </textTemplates>
+    <variables>
+        <description>Stores the ID and Status of the care benefit verify request record.</description>
+        <name>CareBenefitVerifyRequest</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>CareBenefitVerifyRequest</objectType>
+    </variables>
+</Flow>

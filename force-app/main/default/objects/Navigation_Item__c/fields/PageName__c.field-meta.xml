@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PageName__c</fullName>
+    <label>Page Name</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>LandingPage</fullName>
+                <default>true</default>
+                <label>LandingPage</label>
+            </value>
+            <value>
+                <fullName>Clinical Engagement Landing Page</fullName>
+                <default>false</default>
+                <label>Clinical Engagement Landing Page</label>
+            </value>
+            <value>
+                <fullName>Patient Engagement Landing Page</fullName>
+                <default>false</default>
+                <label>Patient Engagement Landing Page</label>
+            </value>
+            <value>
+                <fullName>MedTech Commercial &amp; Medical Engagement Landing Page</fullName>
+                <default>false</default>
+                <label>MedTech Commercial &amp; Medical Engagement Landing Page</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

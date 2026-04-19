@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OmniDataTransform xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <assignmentRulesUsed>false</assignmentRulesUsed>
+    <deletedOnSuccess>false</deletedOnSuccess>
+    <errorIgnored>false</errorIgnored>
+    <expectedInputJson>{
+  &quot;vlcTimeTracking&quot; : {
+    &quot;NavigateToCareProgramenrollee&quot; : null,
+    &quot;Save-Responses&quot; : null,
+    &quot;PrepareDataForDrugList&quot; : null,
+    &quot;PrepareDataForApplicationReviewFlexcard&quot; : null,
+    &quot;PatientInsuranceDetails&quot; : null,
+    &quot;PatientDetails&quot; : null,
+    &quot;FinancialAssistanceProgramGetDrugDetails&quot; : null,
+    &quot;FinancialAssistanceProgramGetAccountDetails&quot; : null,
+    &quot;CreateApplicationFormAndRelatedRecordsWithAttachments&quot; : null,
+    &quot;CANCEL&quot; : null,
+    &quot;ApplicationReview&quot; : null,
+    &quot;DataMapperPostAction1&quot; : null
+  },
+  &quot;vlcPersistentComponent&quot; : { },
+  &quot;userTimeZone&quot; : null,
+  &quot;userProfile&quot; : null,
+  &quot;userName&quot; : null,
+  &quot;userId&quot; : null,
+  &quot;timeStamp&quot; : null,
+  &quot;ContextId&quot; : null,
+  &quot;PatientInsuranceDetails&quot; : {
+    &quot;LSC_FA_v1_SecondaryInsuranceType&quot; : null,
+    &quot;LSC_FA_v1_SecondaryInsuranceSupportingDocuments&quot; : [ {
+      &quot;data&quot; : null,
+      &quot;size&quot; : null,
+      &quot;filename&quot; : null
+    } ],
+    &quot;LSC_FA_v1_SecondaryInsuranceStartDate&quot; : null,
+    &quot;LSC_FA_v1_SecondaryInsurancePlan&quot; : null,
+    &quot;LSC_FA_v1_SecondaryInsurancePayerCompany-Block&quot; : {
+      &quot;LSC_FA_v1_SecondaryInsurancePayerCompany&quot; : null
+    },
+    &quot;LSC_FA_v1_SecondaryInsuranceEndDate&quot; : null,
+    &quot;LSC_FA_v1_PrimaryInsuranceType&quot; : null,
+    &quot;LSC_FA_v1_PrimaryInsuranceSupportingDocuments&quot; : [ {
+      &quot;data&quot; : null,
+      &quot;size&quot; : null,
+      &quot;filename&quot; : null
+    } ],
+    &quot;LSC_FA_v1_PrimaryInsuranceStartDate&quot; : null,
+    &quot;LSC_FA_v1_PrimaryInsurancePlan&quot; : null,
+    &quot;LSC_FA_v1_PrimaryInsurancePayerCompany-Block&quot; : {
+      &quot;LSC_FA_v1_PrimaryInsurancePayerCompany&quot; : null
+    },
+    &quot;LSC_FA_v1_PrimaryInsuranceEndDate&quot; : null,
+    &quot;LSC_FA_v1_PatientSocialAssistance&quot; : null,
+    &quot;LSC_FA_v1_PatientPrescribedDrugs&quot; : null
+  },
+  &quot;PatientDetails&quot; : {
+    &quot;LSC_FA_v1_PatientZipCode&quot; : null,
+    &quot;LSC_FA_v1_PatientState&quot; : null,
+    &quot;LSC_FA_v1_PatientProofOfCitizenship&quot; : [ {
+      &quot;data&quot; : null,
+      &quot;size&quot; : null,
+      &quot;filename&quot; : null
+    } ],
+    &quot;LSC_FA_v1_PatientName&quot; : null,
+    &quot;LSC_FA_v1_PatientMobilePhoneNumber&quot; : null,
+    &quot;LSC_FA_v1_PatientHomePhoneNumber&quot; : null,
+    &quot;LSC_FA_v1_PatientEmail&quot; : null,
+    &quot;LSC_FA_v1_PatientCountry&quot; : null,
+    &quot;LSC_FA_v1_PatientCity&quot; : null,
+    &quot;LSC_FA_v1_PatientAddress&quot; : null
+  },
+  &quot;ApplicationReview&quot; : {
+    &quot;LsFinclAsstApplicationReview&quot; : null
+  }
+}</expectedInputJson>
+    <fieldLevelSecurityEnabled>false</fieldLevelSecurityEnabled>
+    <inputType>JSON</inputType>
+    <isManagedUsingStdDesigner>false</isManagedUsingStdDesigner>
+    <name>LsFinclAsstUpdateApplicationForm</name>
+    <nullInputsIncludedInOutput>false</nullInputsIncludedInOutput>
+    <omniDataTransformItem>
+        <defaultValue>In Progress</defaultValue>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>LsFinclAsstUpdateApplicationFormCustom8392</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>LsFinclAsstUpdateApplicationForm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldFormat>String</outputFieldFormat>
+        <outputFieldName>Stage</outputFieldName>
+        <outputObjectName>ApplicationForm</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>false</disabled>
+        <filterGroup>0.0</filterGroup>
+        <globalKey>LsFinclAsstUpdateApplicationFormCustom4173</globalKey>
+        <inputFieldName>ApplicationFormId</inputFieldName>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <name>LsFinclAsstUpdateApplicationForm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>ApplicationForm</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <omniDataTransformItem>
+        <disabled>true</disabled>
+        <filterGroup>0.0</filterGroup>
+        <filterOperator>=</filterOperator>
+        <globalKey>LsFinclAsstUpdateApplicationFormCustom9240</globalKey>
+        <inputObjectQuerySequence>0.0</inputObjectQuerySequence>
+        <linkedObjectSequence>0.0</linkedObjectSequence>
+        <migrationValue>FAKEMAPPING</migrationValue>
+        <name>LsFinclAsstUpdateApplicationForm</name>
+        <outputCreationSequence>1.0</outputCreationSequence>
+        <outputFieldName>Id</outputFieldName>
+        <outputObjectName>ApplicationForm</outputObjectName>
+        <requiredForUpsert>false</requiredForUpsert>
+        <upsertKey>false</upsertKey>
+    </omniDataTransformItem>
+    <outputType>SObject</outputType>
+    <processSuperBulk>false</processSuperBulk>
+    <responseCacheTtlMinutes>0.0</responseCacheTtlMinutes>
+    <rollbackOnError>true</rollbackOnError>
+    <sourceObject>json</sourceObject>
+    <sourceObjectDefault>false</sourceObjectDefault>
+    <synchronousProcessThreshold>0.0</synchronousProcessThreshold>
+    <type>Load</type>
+    <uniqueName>LsFinclAsstUpdateApplicationForm_1</uniqueName>
+    <versionNumber>1.0</versionNumber>
+    <xmlDeclarationRemoved>false</xmlDeclarationRemoved>
+</OmniDataTransform>

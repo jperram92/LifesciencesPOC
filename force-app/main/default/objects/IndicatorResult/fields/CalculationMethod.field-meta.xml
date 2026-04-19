@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CalculationMethod</fullName>
+    <inlineHelpText>Specifies whether the indicator result was calculated manually or automatically.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

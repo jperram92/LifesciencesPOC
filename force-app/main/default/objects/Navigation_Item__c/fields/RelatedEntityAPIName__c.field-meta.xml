@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RelatedEntityAPIName__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Use only if Navigation Type = &quot;standard__recordRelationshipPage&quot;</inlineHelpText>
+    <label>Related Entity API Name</label>
+    <length>200</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

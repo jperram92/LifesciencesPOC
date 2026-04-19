@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TargetEnrollmentDuration</fullName>
+    <inlineHelpText>The duration in which the enrollment for the targeted number of participants must be completed.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

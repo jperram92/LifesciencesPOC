@@ -1,0 +1,1108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Adds the ID of the current authorization form text record to the AuthorizationFormIds collection.</description>
+        <name>AddAuthorizationFormIdToCollection</name>
+        <label>Add Authorization Form ID to Collection</label>
+        <locationX>3834</locationX>
+        <locationY>890</locationY>
+        <assignmentItems>
+            <assignToReference>AuthorizationFormIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>IterateOverAuthorizationFormTexts.AuthorizationFormId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverAuthorizationFormTexts</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the field values for DigitalVerification and then adds it to the DigitalVerifications collection. Lastly, adds 1 to the DigitalVerificationRecordsCount value.</description>
+        <name>AddDigitalVerificationToCollection</name>
+        <label>Add Digital Verification to Collection</label>
+        <locationX>6166</locationX>
+        <locationY>2162</locationY>
+        <assignmentItems>
+            <assignToReference>DigitalVerification.DesignatedVerifierId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetUser.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DigitalVerification.Comment</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverInfoAuthorizationRequestForms.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DigitalVerification.VerificationStatusCategory</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ReadyForSigning</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DigitalVerification.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverInfoAuthorizationRequestForms.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DigitalVerifications</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>DigitalVerification</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DigitalVerificationRecordsCount</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>IterateOverAuthorizationForms</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the field values for InfoAuthorizationFormConsent and then adds it to the InfoAuthorizationFormConsents collection.</description>
+        <name>AddInfoAuthorizationFormConsentToCollection</name>
+        <label>Add Info Authorization Form Consent to Collection</label>
+        <locationX>5374</locationX>
+        <locationY>1406</locationY>
+        <assignmentItems>
+            <assignToReference>AuthorizationFormConsent.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverInfoAuthorizationRequestForms.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AuthorizationFormConsent.ConsentGiverId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>authorizationFormConsenterId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AuthorizationFormConsent.InfoAuthRequestFormId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverInfoAuthorizationRequestForms.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AuthorizationFormConsents</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>AuthorizationFormConsent</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IsDigitalVerificationRecordCreationRequired</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the field values for UpdatedDigitalVerification and then adds it to the UpdatedDigitalVerifications collection. Lastly, subtracts 1 from the DigitalVerificationRecordsCount value.</description>
+        <name>AddUpdatedDigitalVerificationToCollection</name>
+        <label>Add Updated Digital Verification to Collection</label>
+        <locationX>4010</locationX>
+        <locationY>3464</locationY>
+        <assignmentItems>
+            <assignToReference>UpdatedDigitalVerification.DesignatedVerifierId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetUser.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdatedDigitalVerification.ParentReferenceRecordId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverAuthorizationFormConsents.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdatedDigitalVerification.VerificationStatusCategory</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ReadyForSigning</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdatedDigitalVerification.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetUser.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdatedDigitalVerifications</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>UpdatedDigitalVerification</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DigitalVerificationRecordsCount</assignToReference>
+            <operator>Subtract</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverDigitalVerifications</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the error message that the flow returns when there’s an error creating the authorization form consent records.</description>
+        <name>SetErrorMessageCreateAuthorizationFormConsentRecords</name>
+        <label>Set Error Message</label>
+        <locationX>4186</locationX>
+        <locationY>3032</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Something went wrong and we couldn’t create authorization form consent records.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Sets the error message that the flow returns when there’s an error creating the digital verification records.</description>
+        <name>SetErrorMessageCreateDigitalVerificationRecords</name>
+        <label>Set Error Message</label>
+        <locationX>3482</locationX>
+        <locationY>4040</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Something went wrong and we couldn’t create digital verification records.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Sets the error message that the flow returns when there’s an error creating the info authorization request record.</description>
+        <name>SetErrorMessageCreateInfoAuthorizationRequestRecord</name>
+        <label>Set Error Message</label>
+        <locationX>5242</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Something went wrong and we couldn’t create the info authorization request record.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Sets the error message that the flow returns when the number of records in UpdatedDigitalVerifications doesn’t match the DigitalVerificationRecordsCount value.</description>
+        <name>SetErrorMessageDigitalVerificationsNotUpdated</name>
+        <label>Set Error Message</label>
+        <locationX>3746</locationX>
+        <locationY>3932</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Something went wrong and we couldn’t create Authorization Form Consent records.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Sets the error message that the flow returns when there’s an error getting the authorization form text records.</description>
+        <name>SetErrorMessageGetAuthorizationFormTexts</name>
+        <label>Set Error Message</label>
+        <locationX>4978</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Something went wrong and we couldn’t get the authorization form text records.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Sets the error message that the flow returns when there’s an error getting the authorization request form records.</description>
+        <name>SetErrorMessageGetAuthorizationRequestForms</name>
+        <label>Set Error Message</label>
+        <locationX>4714</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Something went wrong and we couldn’t get the authorization request form records.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Sets the error message that the flow returns when there’s an error getting the data use purpose record.</description>
+        <name>SetErrorMessageGetDataUsePurpose</name>
+        <label>Set Error Message</label>
+        <locationX>5506</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Something went wrong and we couldn’t get the data use purpose record.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Sets the error message that the flow returns when there’s an error getting the info authorization request form records.</description>
+        <name>SetErrorMessageGetInfoAuthorizationRequestForms</name>
+        <label>Set Error Message</label>
+        <locationX>4450</locationX>
+        <locationY>1298</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Something went wrong and we couldn’t get the info authorization request form records.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Sets the error message that the flow returns when there’s an error getting the user record.</description>
+        <name>SetErrorMessageGetUser</name>
+        <label>Set Error Message</label>
+        <locationX>5770</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Something went wrong and we couldn’t get the user record.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Sets the error message that the flow returns when the required inputs aren’t passed into the flow.</description>
+        <name>SetErrorMessageRequiredInputsMissing</name>
+        <label>Set Error Message</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>We couldn’t find values for data use purpose ID, candidate ID, consentgiver ID, language and locale, authorization form text ID, or auth form consenter ID.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Sets the error message that the flow returns when the user record is missing.</description>
+        <name>SetErrorMessageUserRecordMissing</name>
+        <label>Set Error Message</label>
+        <locationX>314</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No user record found.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Sets the message that the flow returns after the digital verification records are created.</description>
+        <name>SetSuccessMessage</name>
+        <label>Set Success Message</label>
+        <locationX>3746</locationX>
+        <locationY>4448</locationY>
+        <assignmentItems>
+            <assignToReference>SuccessMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Consent request records were created.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Determines whether all the digital verification records were updated by checking if the value of DigitalVerificationRecordsCount is zero.</description>
+        <name>AreAllDigitalVerificationsUpdated</name>
+        <label>Are All Digital Verifications Updated?</label>
+        <locationX>3482</locationX>
+        <locationY>3824</locationY>
+        <defaultConnector>
+            <targetReference>SetErrorMessageDigitalVerificationsNotUpdated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>AreUpdated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DigitalVerificationRecordsCount</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CreateDigitalVerificationRecords</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the Comment of the current digital verification record matches the Info Authorization Request Form ID of the current authorization form consent record.</description>
+        <name>DoesAuthorizationFormConsentMatchDigitalVerification</name>
+        <label>Does Authorization Form Consent Match Digital Verification?</label>
+        <locationX>4142</locationX>
+        <locationY>3356</locationY>
+        <defaultConnector>
+            <targetReference>IterateOverDigitalVerifications</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>DoesMatch</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverDigitalVerifications.Comment</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>IterateOverAuthorizationFormConsents.InfoAuthRequestFormId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AddUpdatedDigitalVerificationToCollection</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the Authorization Form Text ID of the current authorization form text record matches the Authorization Form Text ID of the current info authorization request form record.</description>
+        <name>DoesAuthorizationFormTextMatchInfoAuthorizationRequestForm</name>
+        <label>Does Authorization Form Text Match Info Authorization Request Form?</label>
+        <locationX>6122</locationX>
+        <locationY>1730</locationY>
+        <defaultConnector>
+            <targetReference>IterateOverAuthorizationFormTexts2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>IsMatching</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverAuthorizationFormTexts2.Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>IterateOverInfoAuthorizationRequestForms.AuthorizationFormText.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>IterateOverAuthorizationForms</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the Authorization Form ID of the current authorization form record matches the Authorization Form ID of the current info authorization form text record.</description>
+        <name>DoesAuthorizationFormTextMatchInfoAuthorizationRequestForm2</name>
+        <label>Does Authorization Form Match Authorization Form Text?</label>
+        <locationX>6452</locationX>
+        <locationY>1946</locationY>
+        <defaultConnector>
+            <targetReference>IterateOverAuthorizationForms</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>IsAMatch</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverAuthorizationForms.Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>IterateOverAuthorizationFormTexts2.AuthorizationFormId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>IsDigitalSignatureRequired</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether digital verification records were found by checking if DigitalVerificationRecordsCount is greater than zero.</description>
+        <name>HaveDigitalVerificationRecords</name>
+        <label>Have Digital Verification Records?</label>
+        <locationX>3746</locationX>
+        <locationY>3032</locationY>
+        <defaultConnector>
+            <targetReference>SetSuccessMessage</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>HasNoRecords</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DigitalVerificationRecordsCount</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>IterateOverAuthorizationFormConsents</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether a data use purpose ID, candidate ID, consent giver ID, language and locale, authorization form text ID, or auth form consenter ID was passed into the flow.</description>
+        <name>HaveRequiredInputValue</name>
+        <label>Have Required Input Value?</label>
+        <locationX>1040</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>GetUser</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>HasNoRequiredValue</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>dataUsePurposeId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>candidateId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>consentGiverId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>languageAndLocale</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>authorizationFormTextIds</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>authorizationFormTextIds</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>authorizationFormConsenterId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>authorizationFormConsenterId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetErrorMessageRequiredInputsMissing</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether a user record was found by checking if the User from GetUser record variable has a value.</description>
+        <name>HaveUserRecord</name>
+        <label>Have User Record?</label>
+        <locationX>2030</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>GetDataUsePurpose</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>HasNoUserRecord</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetUser</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetErrorMessageUserRecordMissing</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether a digital signature is required for the authorization forms by checking if IsSignatureRequired is set to True.</description>
+        <name>IsDigitalSignatureRequired</name>
+        <label>Is Digital Signature Required?</label>
+        <locationX>6298</locationX>
+        <locationY>2054</locationY>
+        <defaultConnector>
+            <targetReference>IterateOverAuthorizationForms</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>IsRequiredSignature</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverAuthorizationForms.IsSignatureRequired</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AddDigitalVerificationToCollection</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether digital verification records need to be created checking if sDigitalVerificationRequired is set to True.</description>
+        <name>IsDigitalVerificationRecordCreationRequired</name>
+        <label>Is Digital Verification Required?</label>
+        <locationX>5374</locationX>
+        <locationY>1514</locationY>
+        <defaultConnector>
+            <targetReference>IterateOverInfoAuthorizationRequestForms</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>IsRequired</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isDigitalVerificationRequired</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>IterateOverAuthorizationFormTexts2</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>University of Florida - Request Consent {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>University of Florida - Request Consent</label>
+    <loops>
+        <description>Repeats actions in a loop for each authorization form consent record in the AuthorizationFormConsents record collection.</description>
+        <name>IterateOverAuthorizationFormConsents</name>
+        <label>Iterate Over Authorization Form Consents</label>
+        <locationX>3482</locationX>
+        <locationY>3140</locationY>
+        <collectionReference>AuthorizationFormConsents</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>IterateOverDigitalVerifications</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>AreAllDigitalVerificationsUpdated</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Repeats actions in a loop for each authorization form record in the Authorization Forms from GetAuthorizationForms record collection.</description>
+        <name>IterateOverAuthorizationForms</name>
+        <label>Iterate Over Authorization Forms</label>
+        <locationX>6078</locationX>
+        <locationY>1838</locationY>
+        <collectionReference>GetAuthorizationForms</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>DoesAuthorizationFormTextMatchInfoAuthorizationRequestForm2</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>IterateOverAuthorizationFormTexts2</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Repeat actions in a loop for each authorization form text record in the Authorization Form Texts from GetAuthorizationFormTexts record collection.</description>
+        <name>IterateOverAuthorizationFormTexts</name>
+        <label>Iterate Over Authorization Form Texts</label>
+        <locationX>3746</locationX>
+        <locationY>782</locationY>
+        <collectionReference>GetAuthorizationFormTexts</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>AddAuthorizationFormIdToCollection</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>GetAuthorizationForms</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Repeats actions in a loop for each authorization form text record in the Authorization Form Texts from GetAuthorizationFormTexts record collection.</description>
+        <name>IterateOverAuthorizationFormTexts2</name>
+        <label>Iterate Over Authorization Form Texts</label>
+        <locationX>5330</locationX>
+        <locationY>1622</locationY>
+        <collectionReference>GetAuthorizationFormTexts</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>DoesAuthorizationFormTextMatchInfoAuthorizationRequestForm</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>IterateOverInfoAuthorizationRequestForms</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Repeats actions in a loop for each digital verification record in the DigitalVerifications record collection.</description>
+        <name>IterateOverDigitalVerifications</name>
+        <label>Iterate Over Digital Verifications</label>
+        <locationX>3922</locationX>
+        <locationY>3248</locationY>
+        <collectionReference>DigitalVerifications</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>DoesAuthorizationFormConsentMatchDigitalVerification</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>IterateOverAuthorizationFormConsents</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Repeats actions in a loop for each info authorization request form record in the Info Authorization Request Forms from GetInfoAuthorizationRequestForms record collection.</description>
+        <name>IterateOverInfoAuthorizationRequestForms</name>
+        <label>Iterate Over Info Authorization Request Forms</label>
+        <locationX>3746</locationX>
+        <locationY>1298</locationY>
+        <collectionReference>GetInfoAuthorizationRequestForms</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>AddInfoAuthorizationFormConsentToCollection</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>CreateAuthorizationFormConsentRecords</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <overriddenFlow>industries_consent__CreateConsentReq</overriddenFlow>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Creates records using the values in the AuthorizationFormConsents record collection.</description>
+        <name>CreateAuthorizationFormConsentRecords</name>
+        <label>Create Authorization Form Consent Records</label>
+        <locationX>3746</locationX>
+        <locationY>2924</locationY>
+        <connector>
+            <targetReference>HaveDigitalVerificationRecords</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>SetErrorMessageCreateAuthorizationFormConsentRecords</targetReference>
+        </faultConnector>
+        <inputReference>AuthorizationFormConsents</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <description>Creates records using the values in the UpdatedDigitalVerifications record collection.</description>
+        <name>CreateDigitalVerificationRecords</name>
+        <label>Create Digital Verification Records</label>
+        <locationX>3218</locationX>
+        <locationY>3932</locationY>
+        <connector>
+            <targetReference>SetSuccessMessage</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>SetErrorMessageCreateDigitalVerificationRecords</targetReference>
+        </faultConnector>
+        <inputReference>UpdatedDigitalVerifications</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <description>Creates an info authorization request record using the values passed into the flow. Stores the ID of the new info authorization request record in the infoAuthorizationRequestId variable.</description>
+        <name>CreateInfoAuthorizationRequestRecord</name>
+        <label>Create Info Authorization Request Record</label>
+        <locationX>3746</locationX>
+        <locationY>566</locationY>
+        <assignRecordIdToReference>infoAuthorizationRequestId</assignRecordIdToReference>
+        <connector>
+            <targetReference>GetAuthorizationFormTexts</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>SetErrorMessageCreateInfoAuthorizationRequestRecord</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>ConsenterId</field>
+            <value>
+                <elementReference>consentGiverId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DataUsePurposeId</field>
+            <value>
+                <elementReference>dataUsePurposeId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Locale</field>
+            <value>
+                <elementReference>languageAndLocale</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>GetDataUsePurpose.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PertainsToId</field>
+            <value>
+                <elementReference>candidateId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>InfoAuthorizationRequest</object>
+    </recordCreates>
+    <recordLookups>
+        <description>Gets the authorization form records with an ID in the AuthorizationFormRecordIds collection. Stores the result in the Authorization Forms from GetAuthorizationForms record collection.</description>
+        <name>GetAuthorizationForms</name>
+        <label>Get Authorization Forms</label>
+        <locationX>3746</locationX>
+        <locationY>1082</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GetInfoAuthorizationRequestForms</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>SetErrorMessageGetAuthorizationRequestForms</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>AuthorizationFormIds</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>AuthorizationForm</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets the authorization form text records with an ID that matches the ID in the authorizationFormTextIds collection. Stores the result in the Authorization Form Texts from GetAuthorizationFormTexts record collection.</description>
+        <name>GetAuthorizationFormTexts</name>
+        <label>Get Authorization Form Texts</label>
+        <locationX>3746</locationX>
+        <locationY>674</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IterateOverAuthorizationFormTexts</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>SetErrorMessageGetAuthorizationFormTexts</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>authorizationFormTextIds</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>AuthorizationFormText</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets the data use purpose record with an ID that matches the Data Use Purpose ID that’s passed into the flow. Stores the result in the Data Use Purpose from GetDataUsePurpose record variable.</description>
+        <name>GetDataUsePurpose</name>
+        <label>Get Data Use Purpose</label>
+        <locationX>3746</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CreateInfoAuthorizationRequestRecord</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>SetErrorMessageGetDataUsePurpose</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>dataUsePurposeId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>DataUsePurpose</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets the info authorization request form records with an Info Authorization Request ID matching the ID in infoAuthorizationRequestId, and an AuthorizationFormTextId that’s in the AuthorizationFormTextIds collection. Stores the result in the Info Authorization Request Forms from GetInfoAuthorizationRequestForms record collection.</description>
+        <name>GetInfoAuthorizationRequestForms</name>
+        <label>Get Info Authorization Request Forms</label>
+        <locationX>3746</locationX>
+        <locationY>1190</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IterateOverInfoAuthorizationRequestForms</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>SetErrorMessageGetInfoAuthorizationRequestForms</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>InfoAuthorizationRequestId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>infoAuthorizationRequestId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>AuthorizationFormTextId</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>authorizationFormTextIds</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>InfoAuthRequestForm</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets the user record with an Account ID or Contact ID that matches the consentGiverId that’s passed into the flow. Stores the result in the User from GetUser record variable.</description>
+        <name>GetUser</name>
+        <label>Get User</label>
+        <locationX>2030</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>HaveUserRecord</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>SetErrorMessageGetUser</targetReference>
+        </faultConnector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>consentGiverId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ContactId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>consentGiverId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>914</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>HaveRequiredInputValue</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Temporarily stores the info authorization form consent record to be created.</description>
+        <name>AuthorizationFormConsent</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>AuthorizationFormConsent</objectType>
+    </variables>
+    <variables>
+        <description>Stores the authorization form consent IDs that are passed into the flow.</description>
+        <name>authorizationFormConsenterId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores a collection of info authorization form consent records to be created.</description>
+        <name>AuthorizationFormConsents</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>AuthorizationFormConsent</objectType>
+    </variables>
+    <variables>
+        <description>Stores the application form IDs of the authorization form text record to process.</description>
+        <name>AuthorizationFormIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores a collection of authorization form text IDs that are passed into the flow.</description>
+        <name>authorizationFormTextIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the research study candidate ID that represents the candidate that the clinical study pertains to, and is passed into the flow.</description>
+        <name>candidateId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the record ID of the consent giver’s account record that’s passed to the flow.</description>
+        <name>consentGiverId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the record ID of the data use purpose record passed to the flow.</description>
+        <name>dataUsePurposeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Temporarily stores the digital verification record to be created.</description>
+        <name>DigitalVerification</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>DigitalVerification</objectType>
+    </variables>
+    <variables>
+        <description>Stores the number of the records in the DigitalVerifications record collection.</description>
+        <name>DigitalVerificationRecordsCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Stores a collection of digital verification records to be created.</description>
+        <name>DigitalVerifications</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>DigitalVerification</objectType>
+    </variables>
+    <variables>
+        <description>Stores the error message that the flow returns when the flow execution fails.</description>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the ID of the info authorization request record created by the flow. This value is available as output from the flow.</description>
+        <name>infoAuthorizationRequestId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Stores a Boolean value that indicates whether digital verification is required for the records in the AuthorizationFormConsents collection.</description>
+        <name>isDigitalVerificationRequired</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the language and locale of the consent document that’s presented to the consent giver, and is passed into the flow.</description>
+        <name>languageAndLocale</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SuccessMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Temporarily stores the updated digital verification record to be created.</description>
+        <name>UpdatedDigitalVerification</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>DigitalVerification</objectType>
+    </variables>
+    <variables>
+        <description>Stores a collection of updated digital verification records to be created.</description>
+        <name>UpdatedDigitalVerifications</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>DigitalVerification</objectType>
+    </variables>
+</Flow>

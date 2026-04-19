@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FlowDefinitionApiName</fullName>
+    <inlineHelpText>The API name of the flow definition that automatically calculated the indicator result.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

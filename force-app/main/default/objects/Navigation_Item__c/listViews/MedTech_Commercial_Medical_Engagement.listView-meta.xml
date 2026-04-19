@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MedTech_Commercial_Medical_Engagement</fullName>
+    <columns>NAME</columns>
+    <columns>Section_Heading__c</columns>
+    <columns>Sequence_Number__c</columns>
+    <columns>isActive__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>PageName__c</field>
+        <operation>equals</operation>
+        <value>MedTech Commercial &amp; Medical Engagement Landing Page</value>
+    </filters>
+    <label>MedTech Commercial &amp; Medical Engagement</label>
+</ListView>

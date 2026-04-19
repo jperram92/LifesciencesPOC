@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Calls an action that generates and sends an email to recipient about Assessment that needs to be completed</description>
+        <name>SendAssessmentEmail</name>
+        <label>Send Assessment Email</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>AssignSuccessMessage</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>SendAssessmentEmailErrorAssignment</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$User.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>{!$Organization.Name}: You have a new Assessment to complete.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>EmailBodyTextTemplate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>bccRecipientAddressList</name>
+            <value>
+                <elementReference>RecipientEmailCsv</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Adds Account Id to Account Ids List which is further used in sending email notification.</description>
+        <name>AddAccountIdToAccountIdsList</name>
+        <label>Add Account Id to Account Ids List</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>AccountIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>IterateThroughEnvelopeRecords.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateThroughEnvelopeRecords</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign Email to Recipient EmailCSV</description>
+        <name>AddEmailToRecipientEmailCSV</name>
+        <label>Add Email to Recipient Email CSV</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>RecipientEmailCsv</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>{!IterateThroughEnvelopeRecords.Contact.Email},</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopThroughAccountRecords</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Add Recipient Email from the contact</description>
+        <name>AddRecipientEmail</name>
+        <label>Add Recipient Email</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>RecipientEmailCsv</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>{!IterateThroughEnvelopeRecords.Contact.Email},</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateThroughEnvelopeRecords</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign Contact point Email to Recipient List and also store account Ids for which contact point email is assigned</description>
+        <name>AssignContactPointEmailToRecipientList</name>
+        <label>Assign Contact point Email to Recipient List</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>AccountIds</assignToReference>
+            <operator>RemoveAll</operator>
+            <value>
+                <elementReference>IterateThroughContactPointEmails.ParentId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>RecipientEmailCsv</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>{!IterateThroughEnvelopeRecords.Contact.Email},</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateThroughContactPointEmails</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>If everything goes well in the flow success message needs to be assigned</description>
+        <name>AssignSuccessMessage</name>
+        <label>Assign Success Message</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>isResponseSuccess</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>responseMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SendAssessmentEnvelopeSuccessMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>To Assign Error Message when there is an error in getting account records</description>
+        <name>GetAccountRecordsErrorMessageAssignment</name>
+        <label>Get Account Records Error Message Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>responseMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AccountRecordGetErrorMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Assign Error message when there is an error occurred while getting Assessment Envelope Records</description>
+        <name>GetAssessmentEnvelopeErrorMessageAssignment</name>
+        <label>Get Assessment Envelope Error Message Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>responseMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AssessmentEnvelopeGetErrorMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Assigns Error message when there is an error in getting Contact point Emails</description>
+        <name>GetContactPointErrorMessageAssignment</name>
+        <label>Get Contact point Error Message Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>responseMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ContactPointEmailGetErrorMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Assign Error Message When recipient List is empty</description>
+        <name>RecipientListEmptyErrorAssignment</name>
+        <label>Recipient List Empty Error Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>responseMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RecipientListEmptyErrorMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Assign Error Message When there is an error in sending emails</description>
+        <name>SendAssessmentEmailErrorAssignment</name>
+        <label>Send Assessment Email Error Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>responseMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SendEmailsErrorMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Assign Error message when experience site url is not set</description>
+        <name>SetExperienceSiteUrlErrorMessageAssignment</name>
+        <label>Set Experience Site Url Error Message Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>responseMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ExperienceSiteUrlNotSet</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <constants>
+        <description>To store Error Message which will be used when there is an error in getting account records from Database</description>
+        <name>AccountRecordGetErrorMessage</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Error Occurred while Getting Account Records.</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>To Store Error Message when Unable to Get Assessment Envelope</description>
+        <name>AssessmentEnvelopeGetErrorMessage</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Unable to Get Assessment Envelope Records</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>To store Error Message when there is an error occurred while getting contact point emails</description>
+        <name>ContactPointEmailGetErrorMessage</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Unable to get contact point emails associated with the given account</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>The URL of the Experience Cloud site that hosts the Assessment component.</description>
+        <name>ExperienceCloudSiteUrl</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>https://lsc-learning-usa794org.my.site.com/SiteFeasibilityQuestionnaire</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Experience Site Url Not set Error Constant</description>
+        <name>ExperienceSiteUrlNotSet</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Experience Site Url is not set. Ask your admin to configure Experience site URL to send assessments</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>To store Error message which will be displayed when there are no recipients to send email.</description>
+        <name>RecipientListEmptyErrorMessage</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No recipients found. Unable to send Email</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>To store success message when ever assessment envelope is being sent to the user</description>
+        <name>SendAssessmentEnvelopeSuccessMessage</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Assessment Email is successfully sent</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>To store Error Message which will used when there is an error in sending assessment Emails</description>
+        <name>SendEmailsErrorMessage</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Unable to send emails, please try again in some time.</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <description>Check if Contact point Email is Set then use this email for further processing</description>
+        <name>CheckIfContactPointEmailIsSet</name>
+        <label>Check If Contact Point Email is Set</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>IterateThroughContactPointEmails</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ContactPointEmailIsSet</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateThroughContactPointEmails.EmailAddress</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IterateThroughContactPointEmails.EmailAddress</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignContactPointEmailToRecipientList</targetReference>
+            </connector>
+            <label>Contact Point Email is Set</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if experience cloud site URL is set, If it is not then error message will be set and flow will be updated</description>
+        <name>CheckIfExperienceCouldSiteUrlIsSet</name>
+        <label>Check if experience cloud site URL is set</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>SetExperienceSiteUrlErrorMessageAssignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ExperienceCloudSiteURLIsSet</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ExperienceCloudSiteUrl</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>https://updatethisurl.internal.site.com/mypage</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetAssessmentEnvelopeRecords</targetReference>
+            </connector>
+            <label>Experience cloud site URL is set</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check to send email only if at least one recipient is present</description>
+        <name>CheckIfRecipientEmailSizeIsGreaterThanZero</name>
+        <label>Check if Recipient Email Size is greater than zero</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>RecipientListEmptyErrorAssignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>RecipientEmailSizeIsGreaterThanZero</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RecipientEmailCsv</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SendAssessmentEmail</targetReference>
+            </connector>
+            <label>Recipient Email Size is greater than zero</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if there at least one account Id is present to get account details</description>
+        <name>ChecksIfAccountIdsAreNotNull</name>
+        <label>Checks if Account Ids are not null</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>CheckIfRecipientEmailSizeIsGreaterThanZero</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>AccountIdsAreNotNull</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountIds</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetContactPointEmails</targetReference>
+            </connector>
+            <label>Account Ids Are not null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks whether Account has person email Set</description>
+        <name>DoesAccountHasPersonEmailSet</name>
+        <label>Does Account has person Email Set ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>LoopThroughAccountRecords</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>PersonEmailIsSet</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopThroughAccountRecords.PersonEmail</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LoopThroughAccountRecords.PersonEmail</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AddEmailToRecipientEmailCSV</targetReference>
+            </connector>
+            <label>Person email is set</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines which Email Address to Consider based on whether contact is set or Account Contact point is set</description>
+        <name>WhatRecordSetToAssessmentEnvelope</name>
+        <label>What record Is set To Assessment Envelope ?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>IterateThroughEnvelopeRecords</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ContactRecordIsSetToAssessmentEnvelope</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateThroughEnvelopeRecords.ContactId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>003</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IterateThroughEnvelopeRecords.Contact.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AddRecipientEmail</targetReference>
+            </connector>
+            <label>Contact Is Set To Assessment Envelope</label>
+        </rules>
+        <rules>
+            <name>AccountIsSetToAssessmentEnvelope</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateThroughEnvelopeRecords.AccountId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>001</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AddAccountIdToAccountIdsList</targetReference>
+            </connector>
+            <label>Account Record Set To Assessment Envelope</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Bulk Send Assessment Email - V2 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Bulk Send Assessment Email - V2</label>
+    <loops>
+        <description>Iterate through Contact Point Emails and add emails to Recipient Email list</description>
+        <name>IterateThroughContactPointEmails</name>
+        <label>Iterate through Contact Point Emails</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>GetContactPointEmails</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>CheckIfContactPointEmailIsSet</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>GetAccountRecords</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Loop through all the Envelope records</description>
+        <name>IterateThroughEnvelopeRecords</name>
+        <label>Iterate through Envelope records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>GetAssessmentEnvelopeRecords</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>WhatRecordSetToAssessmentEnvelope</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>ChecksIfAccountIdsAreNotNull</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Iterate over all account records and collect Email Ids</description>
+        <name>LoopThroughAccountRecords</name>
+        <label>Loop through Account Records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>GetAccountRecords</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>DoesAccountHasPersonEmailSet</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>CheckIfRecipientEmailSizeIsGreaterThanZero</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <overriddenFlow>ls_sitemgmt__bulk_send_assmnt_email</overriddenFlow>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get Account Records for which Assessment Email Needs to be sent</description>
+        <name>GetAccountRecords</name>
+        <label>Get Account Records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>LoopThroughAccountRecords</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>GetAccountRecordsErrorMessageAssignment</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>AccountIds</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets Assessment Envelope Records associated to passed inputs</description>
+        <name>GetAssessmentEnvelopeRecords</name>
+        <label>Get Assessment Envelope Records</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IterateThroughEnvelopeRecords</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>GetAssessmentEnvelopeErrorMessageAssignment</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>recordIds</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>AssessmentEnvelope</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets Contact point Emails associated to the given account</description>
+        <name>GetContactPointEmails</name>
+        <label>Get Contact point Emails</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IterateThroughContactPointEmails</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>GetContactPointErrorMessageAssignment</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentId</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>AccountIds</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>ContactPointEmail</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>CheckIfExperienceCouldSiteUrlIsSet</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Stores the body of email notifying the recipient about a new assessment that they need to complete. To customize the email body, change the body of this text template.</description>
+        <name>EmailBodyTextTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Hi - ,&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Complete the &lt;a href=&quot;{!ExperienceCloudSiteUrl}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;assessment&lt;/a&gt; requested by &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!$Organization.Name}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Thanking you, &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!$User.FirstName} {!$User.LastName&lt;/span&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <description>To Store Account Ids which is further used to send Assessment Envelope Emails</description>
+        <name>AccountIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>currentItem_RecordswhichHasPersonEmail</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <description>To store the flow execution status</description>
+        <name>isResponseSuccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>To store Comma separated Recipient Emails</description>
+        <name>RecipientEmailCsv</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>To Store List of Assessment Envelope Records</description>
+        <name>recordIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>To store error message when ever any error occurred in the flow If no error then success message will be stored</description>
+        <name>responseMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

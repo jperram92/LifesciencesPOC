@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Diagnostic_Summaries</fullName>
+    <columns>Name</columns>
+    <columns>Patient</columns>
+    <columns>Status</columns>
+    <columns>Code</columns>
+    <columns>CareObservation</columns>
+    <columns>Summary</columns>
+    <columns>UsageType</columns>
+    <filterScope>Mine</filterScope>
+    <label>All Diagnostic Summaries</label>
+</ListView>

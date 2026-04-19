@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TargetSiteCount</fullName>
+    <inlineHelpText>The number of sites planned for conducting the research study.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

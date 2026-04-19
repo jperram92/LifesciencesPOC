@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Verify_if_consent_giver_is_ResearchStudyCandidate</name>
+        <label>Verify if consent giver is ResearchStudyCandidate</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Consent_Giver_is_Research_Study_Candidate</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ConsentGiverId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>7ev</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Research_Study_Candidate</targetReference>
+            </connector>
+            <label>Consent Giver is Research Study Candidate</label>
+        </rules>
+    </decisions>
+    <description>This flow is to update the Research Study Candidate Status to Screening</description>
+    <environments>Default</environments>
+    <interviewLabel>Authorization Form Consent Trigger Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>University of Florida - Authorization Form Consent Trigger Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Research_Study_Candidate</name>
+        <label>Update Research Study Candidate</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ConsentGiverId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Screening</stringValue>
+            </value>
+        </inputAssignments>
+        <object>ResearchStudyCandidate</object>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Verify_if_consent_giver_is_ResearchStudyCandidate</targetReference>
+        </connector>
+        <filterLogic>(1 OR 2) AND 3</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Signed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Seen</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>InfoAuthRequestFormId</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>AuthorizationFormConsent</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

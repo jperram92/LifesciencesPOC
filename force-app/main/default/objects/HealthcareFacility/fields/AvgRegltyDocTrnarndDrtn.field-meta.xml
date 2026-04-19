@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AvgRegltyDocTrnarndDrtn</fullName>
+    <inlineHelpText>Average duration for collecting the required documents for the research study.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

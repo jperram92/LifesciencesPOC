@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ForcstFstPtcpFstVstDate</fullName>
+    <inlineHelpText>The projected date when the first enrolled participant at the site will have their initial study visit, such as a screening or baseline visit.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

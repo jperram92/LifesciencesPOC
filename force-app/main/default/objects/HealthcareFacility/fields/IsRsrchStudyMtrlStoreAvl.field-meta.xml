@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsRsrchStudyMtrlStoreAvl</fullName>
+    <inlineHelpText>Indicates whether a store is available at the healthcare facility to keep the research study materials, such as laboratory kits.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

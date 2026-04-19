@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OverallFacilityScore</fullName>
+    <inlineHelpText>The overall score for the healthcare facility based on criteria such as facility experience and licenses.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

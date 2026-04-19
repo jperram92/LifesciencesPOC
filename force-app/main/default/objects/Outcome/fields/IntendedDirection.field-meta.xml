@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IntendedDirection</fullName>
+    <inlineHelpText>Select the intended direction of change in the behavior, knowledge, skills, status, or level of functioning that&apos;s detailed in the outcome.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

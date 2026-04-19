@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AvgSiteActvToFstPtcpDrtn</fullName>
+    <inlineHelpText>The average number of days between the site activation and the first participant visit to the site.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

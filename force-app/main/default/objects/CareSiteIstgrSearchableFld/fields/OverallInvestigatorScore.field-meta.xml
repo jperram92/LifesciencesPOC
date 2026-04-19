@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OverallInvestigatorScore</fullName>
+    <inlineHelpText>The overall score of the investigator based on criteria, such as experience and licenses.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

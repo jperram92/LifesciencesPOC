@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LeadTimeUnitType</fullName>
+    <inlineHelpText>Represents the type of unit of the lead time for the work procedure.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

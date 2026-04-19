@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsCustodyCompleted</fullName>
+    <inlineHelpText>Determines whether all the custody chain entries for the work order step and the related tasks are completed (true) or not (false).</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

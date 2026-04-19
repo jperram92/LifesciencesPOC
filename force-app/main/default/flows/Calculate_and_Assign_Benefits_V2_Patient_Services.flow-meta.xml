@@ -1,0 +1,1536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Adds the ID of the current coverage benefit record to the CoverageBenefitIds collection.</description>
+        <name>AddCoverageBenefitIdToCollection</name>
+        <label>Add Coverage Benefit ID to Collection</label>
+        <locationX>534</locationX>
+        <locationY>1850</locationY>
+        <assignmentItems>
+            <assignToReference>CoverageBenefitIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>IterateOverCoverageBenefits.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverCoverageBenefits</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Adds the ID of the current coverage benefit item record to the CoverageBenefitItemIds collection.</description>
+        <name>AddCoverageBenefitItemIdToCollection</name>
+        <label>Add Coverage Benefit Item ID to Collection</label>
+        <locationX>1018</locationX>
+        <locationY>2450</locationY>
+        <assignmentItems>
+            <assignToReference>CoverageBenefitItemIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>IterateOverCoverageBenefitItems.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverCoverageBenefitItems</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the current coverage benefit record’s Pharma Copay Amount to AppliedLimitToIntegerFormula and adds the record to the UpdatedCoverageBenefitRecords collection.</description>
+        <name>AddCurrentCoverageBenefitToCollection</name>
+        <label>Add Current Coverage Benefit to Collection</label>
+        <locationX>1458</locationX>
+        <locationY>3182</locationY>
+        <assignmentItems>
+            <assignToReference>IterateOverCoverageBenefitsUpdate.PharmaCopayAmount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AppliedLimitToIntegerFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdatedCoverageBenefitRecords</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>IterateOverCoverageBenefitsUpdate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverCoverageBenefitsUpdate</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Adds the Pharma Copay Amount of the coverage benefit record to CopaySum.</description>
+        <name>AddPharmaCopayAmountToCopaySum</name>
+        <label>Add Pharma Copay Amount to Copay Sum</label>
+        <locationX>798</locationX>
+        <locationY>1850</locationY>
+        <assignmentItems>
+            <assignToReference>CopaySum</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>IterateOverCoverageBenefits.PharmaCopayAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverCoverageBenefits</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Adds the care benefit verify request record associated with a primary member plan to the EffectiveCareBenefitVerifyRequests collection.</description>
+        <name>AddPrimaryCareBenefitVerifyRequestToCollection</name>
+        <label>Add Primary Care Benefit Verify Request to Collection</label>
+        <locationX>1326</locationX>
+        <locationY>1142</locationY>
+        <assignmentItems>
+            <assignToReference>EffectiveCareBenefitVerifyRequests</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>PrimaryMemberPlanCareBenefitVerifyRequestId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ResetMemberPlanCareBenefitVerifyRequestVariables</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Adds the care benefit verify request record associated with a secondary member plan to the EffectiveCareBenefitVerifyRequests collection.</description>
+        <name>AddSecondaryCareBenefitVerifyRequestToCollection</name>
+        <label>Add Secondary Care Benefit Verify Request to Collection</label>
+        <locationX>1590</locationX>
+        <locationY>1142</locationY>
+        <assignmentItems>
+            <assignToReference>EffectiveCareBenefitVerifyRequests</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SecondaryMemberPlanCareBenefitVerifyRequestId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ResetMemberPlanCareBenefitVerifyRequestVariables</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Adds 1 to the stepNumber variable.</description>
+        <name>AssignStepNumber</name>
+        <label>Assign Step Number</label>
+        <locationX>446</locationX>
+        <locationY>134</locationY>
+        <assignmentItems>
+            <assignToReference>stepNumber</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverProductsIds</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets PrimaryMemberPlanCareBenefitVerifyRequest and SecondaryMemberPlanCareBenefitVerifyRequest to an empty string.</description>
+        <name>ResetMemberPlanCareBenefitVerifyRequestVariables</name>
+        <label>Reset Member Plan Care Benefit Verify Request Variables</label>
+        <locationX>1590</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>PrimaryMemberPlanCareBenefitVerifyRequestId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondaryMemberPlanCareBenefitVerifyRequestId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverProductsIds</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets PotentialBenefitAmount to PotentialBenefitAmountFormula, BenefitAssignmentEndDate to BenefitAssignmentEndDateFormula, and outOfPocketExpense to OutOfPocketExpenseFormula.</description>
+        <name>SetBenefitVariables</name>
+        <label>Set Benefit Variables</label>
+        <locationX>446</locationX>
+        <locationY>4550</locationY>
+        <assignmentItems>
+            <assignToReference>PotentialBenefitAmount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>PotentialBenefitAmountFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>BenefitAssignmentEndDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BenefitAssignmentEndDateFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>outOfPocketExpense</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>OutOfPocketExpenseFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>HasMaximumBenefitAmountReached</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets PrimaryMemberPlanCareBenefitVerifyRequestId to the ID of the current care benefit verify request record.</description>
+        <name>SetCareBenefitVerifyRequestMemberPlanPrimary</name>
+        <label>Set Care Benefit Verify Request Member Plan</label>
+        <locationX>1678</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>PrimaryMemberPlanCareBenefitVerifyRequestId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverCareBenefitVerifyRequests.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverCareBenefitVerifyRequests</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets SecondaryMemberPlanCareBenefitVerifyRequestId to the ID of the current care benefit verify request record.</description>
+        <name>SetCareBenefitVerifyRequestMemberPlanSecondary</name>
+        <label>Set Care Benefit Verify Request Member Plan</label>
+        <locationX>1942</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>SecondaryMemberPlanCareBenefitVerifyRequestId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverCareBenefitVerifyRequests.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverCareBenefitVerifyRequests</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets CopaySum to the AppliedLimitToIntegerFormula.</description>
+        <name>SetCopaySum</name>
+        <label>Set Copay Sum</label>
+        <locationX>1370</locationX>
+        <locationY>3458</locationY>
+        <assignmentItems>
+            <assignToReference>CopaySum</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>AppliedLimitToIntegerFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverCoverageBenefitItemLimits</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets EnrolleeLimitFrequencyMultiplier to 1 and BenefitEndDate to BenefitEndDateFormula.</description>
+        <name>SetEnrolleeLimitFrequencyMultiplierMonthly</name>
+        <label>Set Enrollee Limit Frequency Multiplier</label>
+        <locationX>182</locationX>
+        <locationY>4358</locationY>
+        <assignmentItems>
+            <assignToReference>EnrolleeLimitFrequencyMultiplier</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>BenefitEndDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BenefitEndDateFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SetBenefitVariables</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets EnrolleeLimitFrequencyMultiplier to 3 and and BenefitEndDate to BenefitEndDateFormula.</description>
+        <name>SetEnrolleeLimitFrequencyMultiplierQuarterly</name>
+        <label>Set Enrollee Limit Frequency Multiplier</label>
+        <locationX>446</locationX>
+        <locationY>4358</locationY>
+        <assignmentItems>
+            <assignToReference>EnrolleeLimitFrequencyMultiplier</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>3.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>BenefitEndDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BenefitEndDateFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SetBenefitVariables</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets EnrolleeLimitFrequencyMultiplier to 12 and and BenefitEndDate to BenefitEndDateFormula.</description>
+        <name>SetEnrolleeLimitFrequencyMultiplierYearly</name>
+        <label>Set Enrollee Limit Frequency Multiplier</label>
+        <locationX>710</locationX>
+        <locationY>4358</locationY>
+        <assignmentItems>
+            <assignToReference>EnrolleeLimitFrequencyMultiplier</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>12.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>BenefitEndDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BenefitEndDateFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SetBenefitVariables</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets ExceptionMessage to the message that the flow returns when there’s an error getting, creating, or updating a record.</description>
+        <name>SetErrorMessage</name>
+        <label>Set Error Message</label>
+        <locationX>314</locationX>
+        <locationY>4982</locationY>
+        <assignmentItems>
+            <assignToReference>ExceptionMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>$Flow.FaultMessage</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CreateProcessException</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets ExceptionMessage to MaximumBenefitAmountReachedErrorTextTemplate.</description>
+        <name>SetErrorMessageMaximumBenefitAmountReached</name>
+        <label>Set Error Message</label>
+        <locationX>842</locationX>
+        <locationY>4766</locationY>
+        <assignmentItems>
+            <assignToReference>ExceptionMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>MaximumBenefitAmountReachedErrorTextTemplate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>CreateProcessException</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets PayoutFrequencyMultiplier to 1 and PayoutFrequencyEndDate to CurrentMonthEndDateFormula.</description>
+        <name>SetPayoutFrequencyMultiplierMonthly</name>
+        <label>Set Payout Frequency Multiplier</label>
+        <locationX>182</locationX>
+        <locationY>4058</locationY>
+        <assignmentItems>
+            <assignToReference>PayoutFrequencyMultiplier</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>PayoutFrequencyEndDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CurrentMonthEndDateFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>WhatIsTheEnrolleeLimitFrequency</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets PayoutFrequencyMultiplier to 3 and PayoutFrequencyEndDate to CurrentQuarterEndDateFormula.</description>
+        <name>SetPayoutFrequencyMultiplierQuarterly</name>
+        <label>Set Payout Frequency Multiplier</label>
+        <locationX>446</locationX>
+        <locationY>4058</locationY>
+        <assignmentItems>
+            <assignToReference>PayoutFrequencyMultiplier</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>3.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>PayoutFrequencyEndDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CurrentQuarterEndDateFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>WhatIsTheEnrolleeLimitFrequency</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets PayoutFrequencyMultiplier to 12 and PayoutFrequencyEndDate to CurrentYearEndDateFormula.</description>
+        <name>SetPayoutFrequencyMultiplierYearly</name>
+        <label>Set Payout Frequency Multiplier</label>
+        <locationX>710</locationX>
+        <locationY>4058</locationY>
+        <assignmentItems>
+            <assignToReference>PayoutFrequencyMultiplier</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>12.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>PayoutFrequencyEndDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CurrentYearEndDateFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>WhatIsTheEnrolleeLimitFrequency</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Determines whether the Product ID of the current record in IterateOverCareBenefitVerifyRequests matches the current Product ID in IterateOverProductsIds.</description>
+        <name>DoesTheDrugMatch</name>
+        <label>Does the Drug Match?</label>
+        <locationX>2162</locationX>
+        <locationY>458</locationY>
+        <defaultConnector>
+            <targetReference>IterateOverCareBenefitVerifyRequests</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsMatching</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverCareBenefitVerifyRequests.AuthorizedPrescription.Medication.ProductId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>IterateOverProductsIds</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>WhatIsThePlanTypeOfCareBenefitVerifyRequest</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the maximum benefit amount has been reached by checking if the benefit’s Maximum Benefit Amount is greater than Benefit Amount Used and RemainingBenefitAmountFormula greater than PotentialBenefitAmount.</description>
+        <name>HasMaximumBenefitAmountReached</name>
+        <label>Has Maximum Benefit Amount Reached?</label>
+        <locationX>446</locationX>
+        <locationY>4658</locationY>
+        <defaultConnector>
+            <targetReference>SetErrorMessageMaximumBenefitAmountReached</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>HasNotReachedMaximumBenefitAmount</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>benefit.MaxBenefitAmount</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>benefit.BudgetAmountUsed</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RemainingBenefitAmountFormula</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>PotentialBenefitAmount</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CreateProgramEnrollment</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines the member plan of the current care benefit verify request record.</description>
+        <name>HasWhichMemberPlan</name>
+        <label>Has Which Member Plan?</label>
+        <locationX>1590</locationX>
+        <locationY>1034</locationY>
+        <defaultConnector>
+            <targetReference>ResetMemberPlanCareBenefitVerifyRequestVariables</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>None (Default)</defaultConnectorLabel>
+        <rules>
+            <name>HasPrimaryMemberPlan</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>PrimaryMemberPlanCareBenefitVerifyRequestId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AddPrimaryCareBenefitVerifyRequestToCollection</targetReference>
+            </connector>
+            <label>Primary Member Plan</label>
+        </rules>
+        <rules>
+            <name>HasSecondaryMemberPlan</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SecondaryMemberPlanCareBenefitVerifyRequestId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>PrimaryMemberPlanCareBenefitVerifyRequestId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AddSecondaryCareBenefitVerifyRequestToCollection</targetReference>
+            </connector>
+            <label>Secondary Member Plan</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the current coverage benefit record has an associated coverage benefit item record.</description>
+        <name>HaveAssociatedCoverageBenefitItemLimit</name>
+        <label>Have Associated Coverage Benefit Item Limit?</label>
+        <locationX>1590</locationX>
+        <locationY>3074</locationY>
+        <defaultConnector>
+            <targetReference>IterateOverCoverageBenefitsUpdate</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
+        <rules>
+            <name>HasAssociatedCoverageBenefitItemLimit</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverCoverageBenefitsUpdate.Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>IterateOverCoverageBenefitItemLimits.CoverageBenefitItem.CoverageBenefitId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AddCurrentCoverageBenefitToCollection</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether coverage benefit items need to be fetched by checking if the CoverageBenefitIds collection isn’t null.</description>
+        <name>HaveCoverageBenefitIds</name>
+        <label>Have Coverage Benefit IDs?</label>
+        <locationX>446</locationX>
+        <locationY>2126</locationY>
+        <defaultConnector>
+            <targetReference>GetCoverageBenefitItems</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes (Default)</defaultConnectorLabel>
+        <rules>
+            <name>HasNoCoverageBenefitIds</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CoverageBenefitIds</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateCoverageBenefits</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the Pharma Copay Amount field on the current coverage benefit record has a value.</description>
+        <name>HavePharmaCopayAmount</name>
+        <label>Have Pharma Copay Amount?</label>
+        <locationX>666</locationX>
+        <locationY>1742</locationY>
+        <defaultConnector>
+            <targetReference>AddPharmaCopayAmountToCopaySum</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes (Default)</defaultConnectorLabel>
+        <rules>
+            <name>HasNoPharmaCopayAmount</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverCoverageBenefits.PharmaCopayAmount</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AddCoverageBenefitIdToCollection</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines the applicant frequency by checking if the benefit record’s Enrollee Limit Frequency is Quarterly, Monthly, or Yearly.</description>
+        <name>WhatIsTheEnrolleeLimitFrequency</name>
+        <label>What is the Enrollee Limit Frequency?</label>
+        <locationX>446</locationX>
+        <locationY>4250</locationY>
+        <defaultConnector>
+            <targetReference>SetEnrolleeLimitFrequencyMultiplierYearly</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yearly (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsMonthlyEnrolleeLimitFrequency</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>benefit.EnrolleeLimitFrequency</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Monthly</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetEnrolleeLimitFrequencyMultiplierMonthly</targetReference>
+            </connector>
+            <label>Monthly</label>
+        </rules>
+        <rules>
+            <name>IsQuarterlyEnrolleeLimitFrequency</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>benefit.EnrolleeLimitFrequency</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Quaterly</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetEnrolleeLimitFrequencyMultiplierQuarterly</targetReference>
+            </connector>
+            <label>Quarterly</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines the payout frequency by checking if the benefit record’s Payout Frequency is Quarterly, Monthly, or Yearly.</description>
+        <name>WhatIsThePayoutFrequency</name>
+        <label>What is the Payout Frequency?</label>
+        <locationX>446</locationX>
+        <locationY>3950</locationY>
+        <defaultConnector>
+            <targetReference>SetPayoutFrequencyMultiplierYearly</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yearly (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsMonthlyPayoutFrequency</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>benefit.PayoutFrequency</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Monthly</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetPayoutFrequencyMultiplierMonthly</targetReference>
+            </connector>
+            <label>Monthly</label>
+        </rules>
+        <rules>
+            <name>IsQuarterlyPayoutFrequency</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>benefit.PayoutFrequency</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Quaterly</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetPayoutFrequencyMultiplierQuarterly</targetReference>
+            </connector>
+            <label>Quarterly</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the plan type of the current care benefit verify request record is Primary or Secondary.</description>
+        <name>WhatIsThePlanTypeOfCareBenefitVerifyRequest</name>
+        <label>What is the Plan Type of Care Benefit Verify Request?</label>
+        <locationX>1942</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>IterateOverCareBenefitVerifyRequests</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsPrimaryMemberPlan</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverCareBenefitVerifyRequests.MemberPlan.PrimarySecondaryTertiary</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Primary</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetCareBenefitVerifyRequestMemberPlanPrimary</targetReference>
+            </connector>
+            <label>Primary Member Plan</label>
+        </rules>
+        <rules>
+            <name>IsSecondaryMemberPlan</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverCareBenefitVerifyRequests.MemberPlan.PrimarySecondaryTertiary</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Secondary</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetCareBenefitVerifyRequestMemberPlanSecondary</targetReference>
+            </connector>
+            <label>Secondary Member Plan</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <description>Converts the data type of the applied limit from string to integer.</description>
+        <name>AppliedLimitToIntegerFormula</name>
+        <dataType>Number</dataType>
+        <expression>IF( CONTAINS({!IterateOverCoverageBenefitItemLimits.AppliedLimit}, &quot;$&quot;), VALUE(SUBSTITUTE({!IterateOverCoverageBenefitItemLimits.AppliedLimit}, &quot;$&quot;, &quot;&quot;)), VALUE({!IterateOverCoverageBenefitItemLimits.AppliedLimit}) )</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <description>Calculates the end date of the benefit assignment.</description>
+        <name>BenefitAssignmentEndDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>IF({!PayoutFrequencyEndDate} &lt;= {!BenefitEndDate}, {!PayoutFrequencyEndDate},{!BenefitEndDate})</expression>
+    </formulas>
+    <formulas>
+        <description>Calculates the end date of the benefit.</description>
+        <name>BenefitEndDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>DATEVALUE({!benefit.EndDateTime})</expression>
+    </formulas>
+    <formulas>
+        <description>Calculates today’s date.</description>
+        <name>CurrentDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <formulas>
+        <description>Calculates the end date of the current month.</description>
+        <name>CurrentMonthEndDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>IF(MONTH({!CurrentDateFormula})=12, DATE(YEAR({!CurrentDateFormula}), 12, 31),  DATE(YEAR({!CurrentDateFormula}), MONTH({!CurrentDateFormula})+1, 1)-1)</expression>
+    </formulas>
+    <formulas>
+        <description>Calculates the end date of the current quarter.</description>
+        <name>CurrentQuarterEndDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>CASE(CEILING( MONTH ( {!CurrentDateFormula} ) / 3 ), 1, DATE(YEAR({!CurrentDateFormula}), 03,31), 2, DATE(YEAR({!CurrentDateFormula}), 06,30), 3, DATE(YEAR({!CurrentDateFormula}), 09,30), 4, DATE(YEAR({!CurrentDateFormula}), 12,31), NULL)</expression>
+    </formulas>
+    <formulas>
+        <description>Calculates the end date of the current year.</description>
+        <name>CurrentYearEndDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>DATE(YEAR({!CurrentDateFormula}),12,31)</expression>
+    </formulas>
+    <formulas>
+        <description>Calculates the maximum amount that can be availed as benefit.</description>
+        <name>MaximumBenenfitAmountFormula</name>
+        <dataType>Currency</dataType>
+        <expression>MIN({!CopaySum},{!benefit.MaxBenefitAmount})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <description>Calculates the out-of-pocket expense for the benefit request.</description>
+        <name>OutOfPocketExpenseFormula</name>
+        <dataType>Currency</dataType>
+        <expression>IF(({!EnrolleeLimitFrequencyMultiplier}=1)&amp;&amp;({!PayoutFrequencyMultiplier}=12),({!CopaySum})*MAX(1,(IF(YEAR({!CurrentYearEndDateFormula})=YEAR(DATEVALUE({!benefit.EndDateTime})),MIN(MONTH({!CurrentYearEndDateFormula}),MONTH(DATEVALUE({!benefit.EndDateTime}))), MONTH({!CurrentYearEndDateFormula}))-MONTH({!CurrentDateFormula})))-{!PotentialBenefitAmount},
+            IF(({!EnrolleeLimitFrequencyMultiplier}=1)&amp;&amp;({!PayoutFrequencyMultiplier}=1),{!CopaySum}-{!PotentialBenefitAmount},
+            IF(({!EnrolleeLimitFrequencyMultiplier}=1)&amp;&amp;({!PayoutFrequencyMultiplier}=3),({!CopaySum})*MOD(MAX(1, (IF(YEAR({!CurrentYearEndDateFormula})=YEAR(DATEVALUE({!benefit.EndDateTime})),MIN(MONTH({!CurrentYearEndDateFormula}),MONTH(DATEVALUE({!benefit.EndDateTime}))), MONTH({!CurrentYearEndDateFormula}))-MONTH({!CurrentDateFormula}))),3)-{!PotentialBenefitAmount},
+            IF(({!EnrolleeLimitFrequencyMultiplier}=3)&amp;&amp;({!PayoutFrequencyMultiplier}=12),({!CopaySum})*MAX(1,FLOOR((IF(YEAR({!CurrentYearEndDateFormula})=YEAR(DATEVALUE({!benefit.EndDateTime})),MIN(MONTH({!CurrentYearEndDateFormula}),MONTH(DATEVALUE({!benefit.EndDateTime}))), MONTH({!CurrentYearEndDateFormula}))-MONTH({!CurrentDateFormula}))/3))-{!PotentialBenefitAmount},
+            IF(({!EnrolleeLimitFrequencyMultiplier}=3)&amp;&amp;({!PayoutFrequencyMultiplier}=3),{!CopaySum}-{!PotentialBenefitAmount},
+            ({!CopaySum}*({!PayoutFrequencyMultiplier}/{!EnrolleeLimitFrequencyMultiplier}))-{!PotentialBenefitAmount})
+            ))))</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Calculates the potential benefit amount.</description>
+        <name>PotentialBenefitAmountFormula</name>
+        <dataType>Currency</dataType>
+        <expression>IF(({!EnrolleeLimitFrequencyMultiplier}=1)&amp;&amp;({!PayoutFrequencyMultiplier}=12),MIN({!benefit.EnrolleeAmountLimit},MIN({!benefit.EnrolleeTrxnAmountLimit},{!CopaySum})*MAX(1,(IF(YEAR({!CurrentYearEndDateFormula})=YEAR(DATEVALUE({!benefit.EndDateTime})),MIN(MONTH({!CurrentYearEndDateFormula}),MONTH(DATEVALUE({!benefit.EndDateTime}))), MONTH({!CurrentYearEndDateFormula}))-MONTH({!CurrentDateFormula})))),
+            IF(({!EnrolleeLimitFrequencyMultiplier}=1)&amp;&amp;({!PayoutFrequencyMultiplier}=1),MIN({!benefit.EnrolleeAmountLimit},MIN({!benefit.EnrolleeTrxnAmountLimit},{!CopaySum})),
+            IF(({!EnrolleeLimitFrequencyMultiplier}=1)&amp;&amp;({!PayoutFrequencyMultiplier}=3),MIN({!benefit.EnrolleeAmountLimit},MIN({!benefit.EnrolleeTrxnAmountLimit},{!CopaySum})*MOD(MAX(1, (IF(YEAR({!CurrentYearEndDateFormula})=YEAR(DATEVALUE({!benefit.EndDateTime})),MIN(MONTH({!CurrentYearEndDateFormula}),MONTH(DATEVALUE({!benefit.EndDateTime}))), MONTH({!CurrentYearEndDateFormula}))-MONTH({!CurrentDateFormula}))),3 )),
+            IF(({!EnrolleeLimitFrequencyMultiplier}=3)&amp;&amp;({!PayoutFrequencyMultiplier}=12),MIN({!benefit.EnrolleeAmountLimit},MIN({!benefit.EnrolleeTrxnAmountLimit},{!CopaySum})*MAX(1,FLOOR((IF(YEAR({!CurrentYearEndDateFormula})=YEAR(DATEVALUE({!benefit.EndDateTime})),MIN(MONTH({!CurrentYearEndDateFormula}),MONTH(DATEVALUE({!benefit.EndDateTime}))), MONTH({!CurrentYearEndDateFormula}))-MONTH({!CurrentDateFormula}))/3))),
+            IF(({!EnrolleeLimitFrequencyMultiplier}=3)&amp;&amp;({!PayoutFrequencyMultiplier}=3),MIN({!benefit.EnrolleeAmountLimit},MIN({!benefit.EnrolleeTrxnAmountLimit},{!CopaySum})),
+            MIN(MIN({!CopaySum}, {!benefit.EnrolleeTrxnAmountLimit})*({!PayoutFrequencyMultiplier}/{!EnrolleeLimitFrequencyMultiplier}),{!benefit.EnrolleeAmountLimit}))
+            ))))</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <description>Calculates the remaining benefit amount.</description>
+        <name>RemainingBenefitAmountFormula</name>
+        <dataType>Currency</dataType>
+        <expression>{!benefit.MaxBenefitAmount}-{!benefit.BudgetAmountUsed}</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>Calculate and Assign Benefits V2 - Patient Services {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Calculate and Assign Benefits V2 - Patient Services</label>
+    <loops>
+        <description>Repeats actions for each care benefit verify request record in careBenefitVerifyRequests.</description>
+        <name>IterateOverCareBenefitVerifyRequests</name>
+        <label>Iterate Over Care Benefit Verify Requests</label>
+        <locationX>1590</locationX>
+        <locationY>350</locationY>
+        <collectionReference>careBenefitVerifyRequests</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>DoesTheDrugMatch</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>HasWhichMemberPlan</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Repeats actions for each coverage benefit item limit record in Coverage Benefit Item Limits from GetCoverageBenefitItemLimits.</description>
+        <name>IterateOverCoverageBenefitItemLimits</name>
+        <label>Iterate Over Coverage Benefit Item Limits</label>
+        <locationX>930</locationX>
+        <locationY>2858</locationY>
+        <collectionReference>GetCoverageBenefitItemLimits</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>IterateOverCoverageBenefitsUpdate</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>UpdateCoverageBenefits</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Repeats actions for each coverage benefit item record in Benefit Items from GetCoverageBenefitItems.</description>
+        <name>IterateOverCoverageBenefitItems</name>
+        <label>Iterate Over Coverage Benefit Items</label>
+        <locationX>930</locationX>
+        <locationY>2342</locationY>
+        <collectionReference>GetCoverageBenefitItems</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>AddCoverageBenefitItemIdToCollection</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>GetCareLimitType</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Repeats actions for each coverage benefit record in Coverage Benefits from GetCoverageBenefits.</description>
+        <name>IterateOverCoverageBenefits</name>
+        <label>Iterate Over Coverage Benefits</label>
+        <locationX>446</locationX>
+        <locationY>1634</locationY>
+        <collectionReference>GetCoverageBenefits</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>HavePharmaCopayAmount</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>HaveCoverageBenefitIds</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Repeats actions for each coverage benefit record in Coverage Benefits from GetCoverageBenefits.</description>
+        <name>IterateOverCoverageBenefitsUpdate</name>
+        <label>Iterate Over Coverage Benefits</label>
+        <locationX>1370</locationX>
+        <locationY>2966</locationY>
+        <collectionReference>GetCoverageBenefits</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>HaveAssociatedCoverageBenefitItemLimit</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>SetCopaySum</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Repeats actions for each product ID in the productIds collection.</description>
+        <name>IterateOverProductsIds</name>
+        <label>Iterate Over Product IDs</label>
+        <locationX>446</locationX>
+        <locationY>242</locationY>
+        <collectionReference>productIds</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>IterateOverCareBenefitVerifyRequests</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>GetCoverageBenefits</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <overriddenFlow>LsFinclAsst__CalcAndAssignBenefits</overriddenFlow>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Creates the benefit assignment record using the values passed into the flow. Stores the ID of the new benefit assignment record in the benefitAssignmenttId variable.</description>
+        <name>CreateBenefitAssignment</name>
+        <label>Create Benefit Assignment</label>
+        <locationX>50</locationX>
+        <locationY>4874</locationY>
+        <assignRecordIdToReference>benefitAssignmenttId</assignRecordIdToReference>
+        <connector>
+            <targetReference>UpdateApplicationFormApproved</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>SetErrorMessage</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>BenefitId</field>
+            <value>
+                <elementReference>benefit.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>EndDateTime</field>
+            <value>
+                <elementReference>BenefitAssignmentEndDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>EntitlementAmount</field>
+            <value>
+                <elementReference>PotentialBenefitAmount</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>MaximumBenefitAmount</field>
+            <value>
+                <elementReference>MaximumBenenfitAmountFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>MinimumBenefitAmount</field>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PayoutFrequency</field>
+            <value>
+                <elementReference>benefit.EnrolleeLimitFrequency</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ProgramEnrollmentId</field>
+            <value>
+                <elementReference>CreateProgramEnrollment</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StartDateTime</field>
+            <value>
+                <elementReference>CurrentDateFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <object>BenefitAssignment</object>
+    </recordCreates>
+    <recordCreates>
+        <description>Creates a process exception record using the information passed into the flow. Stores the ID of the new process exception record in Process ExceptionId from CreateProcessException.</description>
+        <name>CreateProcessException</name>
+        <label>Create Process Exception</label>
+        <locationX>314</locationX>
+        <locationY>5090</locationY>
+        <connector>
+            <targetReference>UpdateApplicationFormRejected</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AttachedToId</field>
+            <value>
+                <elementReference>applicationFormId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ExternalReference</field>
+            <value>
+                <elementReference>stepNumber</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FlowOrchInstRelaObjId</field>
+            <value>
+                <elementReference>flowOrchInstRelaObjId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Message</field>
+            <value>
+                <elementReference>ExceptionMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Triaged</stringValue>
+            </value>
+        </inputAssignments>
+        <object>ProcessException</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <description>Creates the program enrollment record using the values passed into the flow. Stores the ID of the new program enrollment record in Program EnrollmentId from CreateProgramEnrollment.</description>
+        <name>CreateProgramEnrollment</name>
+        <label>Create Program Enrollment</label>
+        <locationX>50</locationX>
+        <locationY>4766</locationY>
+        <connector>
+            <targetReference>CreateBenefitAssignment</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>SetErrorMessage</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>CareProgramEnrolleeId</field>
+            <value>
+                <elementReference>careProgramEnrolleeId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IsActive</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <stringValue>{!benefit.Program.Name}_Enrollment</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ProgramId</field>
+            <value>
+                <elementReference>programId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>ProgramEnrollment</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Gets the benefit record with a Program ID matching the programId passed into the flow and Active is True. Stores the result in the benefit record variable.</description>
+        <name>GetBenefit</name>
+        <label>Get Benefit</label>
+        <locationX>446</locationX>
+        <locationY>3842</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>WhatIsThePayoutFrequency</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>SetErrorMessage</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ProgramId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>programId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Benefit</object>
+        <outputReference>benefit</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>PayoutFrequency</queriedFields>
+        <queriedFields>EnrolleeAmountLimit</queriedFields>
+        <queriedFields>EnrolleeLimitFrequency</queriedFields>
+        <queriedFields>EnrolleeTrxnAmountLimit</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>ProgramId</queriedFields>
+        <queriedFields>MaxBenefitAmount</queriedFields>
+        <queriedFields>EndDateTime</queriedFields>
+        <queriedFields>BudgetAmountUsed</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets the care limit type record with a Limit Type equal to Copay, and Metric Type equal to Money or Amount. Stores the result in the Care Limit Type from GetCareLimitType record variable.</description>
+        <name>GetCareLimitType</name>
+        <label>Get Care Limit Type</label>
+        <locationX>930</locationX>
+        <locationY>2642</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GetCoverageBenefitItemLimits</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>SetErrorMessage</targetReference>
+        </faultConnector>
+        <filterLogic>(1 AND (2 OR 3))</filterLogic>
+        <filters>
+            <field>LimitType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Copay</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>MetricType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Money</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>MetricType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Amount</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CareLimitType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets the coverage benefit item limit records with a Coverage Benefit Item ID that’s in CoverageBenefitItemIds, and Care Limit Type ID matching the ID of the record in Care Limit Type from GetCareLimitType. Stores the results in the Coverage Benefit Item Limits from GetCoverageBenefitItemLimits record collection.</description>
+        <name>GetCoverageBenefitItemLimits</name>
+        <label>Get Coverage Benefit Item Limits</label>
+        <locationX>930</locationX>
+        <locationY>2750</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IterateOverCoverageBenefitItemLimits</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>SetErrorMessage</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CoverageBenefitItemId</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>CoverageBenefitItemIds</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CareLimitTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCareLimitType.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>CoverageBenefitItemLimit</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets the coverage benefit item records with a Coverage Benefit ID that’s in CoverageBenefitIds, and Active is True. Stores the results in the Coverage Benefit Items from GetCoverageBenefitItems record collection.</description>
+        <name>GetCoverageBenefitItems</name>
+        <label>Get Coverage Benefit Items</label>
+        <locationX>930</locationX>
+        <locationY>2234</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IterateOverCoverageBenefitItems</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>SetErrorMessage</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CoverageBenefitId</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>CoverageBenefitIds</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>CoverageBenefitItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets the coverage benefit records with a Care Benefit Verify Request ID that’s in EffectiveCareBenefitVerifyRequests, and Active is True. Stores the results in the Coverage Benefits from GetCoverageBenefits record collection.</description>
+        <name>GetCoverageBenefits</name>
+        <label>Get Coverage Benefits</label>
+        <locationX>446</locationX>
+        <locationY>1526</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IterateOverCoverageBenefits</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>SetErrorMessage</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CareBenefitVerifyRequestId</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>EffectiveCareBenefitVerifyRequests</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>CoverageBenefit</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Updates the application form record with an ID that matches the applicationFormId passed into the flow, setting the Stage to Approved.</description>
+        <name>UpdateApplicationFormApproved</name>
+        <label>Update Application Form</label>
+        <locationX>50</locationX>
+        <locationY>4982</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>applicationFormId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Stage</field>
+            <value>
+                <stringValue>Approved</stringValue>
+            </value>
+        </inputAssignments>
+        <object>ApplicationForm</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Updates the application form record with an ID that matches applicationFormId, setting the stage to Rejected.</description>
+        <name>UpdateApplicationFormRejected</name>
+        <label>Update Application Form</label>
+        <locationX>314</locationX>
+        <locationY>5198</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>applicationFormId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Stage</field>
+            <value>
+                <stringValue>Rejected</stringValue>
+            </value>
+        </inputAssignments>
+        <object>ApplicationForm</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Updates the coverage benefit records associated with the IDs in UpdatedCoverageBenefitRecords, setting the Pharma Copay Amount to CopaySum.</description>
+        <name>UpdateCoverageBenefits</name>
+        <label>Update Coverage Benefits</label>
+        <locationX>446</locationX>
+        <locationY>3734</locationY>
+        <connector>
+            <targetReference>GetBenefit</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>SetErrorMessage</targetReference>
+        </faultConnector>
+        <inputReference>UpdatedCoverageBenefitRecords</inputReference>
+    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>320</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>AssignStepNumber</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Stores the text template that contains the message that the flow returns when the maximum benefit amount has been reached.</description>
+        <name>MaximumBenefitAmountReachedErrorTextTemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>You&apos;ve reached the maximum benefit amount.</text>
+    </textTemplates>
+    <variables>
+        <description>Stores the application form ID that was passed into the flow.</description>
+        <name>applicationFormId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the benefit record associated with the programId passed into the flow. This value is available as output from the flow.</description>
+        <name>benefit</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Benefit</objectType>
+    </variables>
+    <variables>
+        <description>Stores the end date of the benefit assignment.</description>
+        <name>BenefitAssignmentEndDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the ID of the benefit assignment record created by the flow. This value is available as output from the flow.</description>
+        <name>benefitAssignmenttId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the end date of the benefit.</description>
+        <name>BenefitEndDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the care benefit verify request records passed into the flow.</description>
+        <name>careBenefitVerifyRequests</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>CareBenefitVerifyRequest</objectType>
+    </variables>
+    <variables>
+        <description>The ID of the financial assistance program enrollee.</description>
+        <name>careProgramEnrolleeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>The running total of the copay amount for a drug.</description>
+        <name>CopaySum</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Stores the IDs of the coverage benefit records to process.</description>
+        <name>CoverageBenefitIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the IDs of the coverage benefit item records to process.</description>
+        <name>CoverageBenefitItemIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores a collection of care benefit verify request records to be processed.</description>
+        <name>EffectiveCareBenefitVerifyRequests</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the multiplier for enrollee limit frequency of a potential benefit calculation.</description>
+        <name>EnrolleeLimitFrequencyMultiplier</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Stores the message that’s assigned to the Message field of the process exception record to be created.</description>
+        <name>ExceptionMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the flow orchestration instance related object ID that was passed into the flow.</description>
+        <name>flowOrchInstRelaObjId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the out-of-pocket expense for the benefit request.</description>
+        <name>outOfPocketExpense</name>
+        <dataType>Currency</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <description>Stores the end date for the payout frequency.</description>
+        <name>PayoutFrequencyEndDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the multiplier for payout frequency of a potential benefit calculation.</description>
+        <name>PayoutFrequencyMultiplier</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Stores the amount that the patient can get as part of the Financial Assistance program.</description>
+        <name>PotentialBenefitAmount</name>
+        <dataType>Currency</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <description>Stores the ID of care benefit verify request record associated with a primary member plan.</description>
+        <name>PrimaryMemberPlanCareBenefitVerifyRequestId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Stores the collection of product IDs passed into the flow.</description>
+        <name>productIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the Program ID of the Financial Assistance Program passed into the flow.</description>
+        <name>programId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the ID of care benefit verify request record associated with a secondary member plan.</description>
+        <name>SecondaryMemberPlanCareBenefitVerifyRequestId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Stores the step number of the current stage.</description>
+        <name>stepNumber</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <description>Stores the coverage benefit records with the updated pharma copay amount.</description>
+        <name>UpdatedCoverageBenefitRecords</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>CoverageBenefit</objectType>
+    </variables>
+</Flow>

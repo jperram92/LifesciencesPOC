@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FieldList</fullName>
+    <inlineHelpText>The list of fields with optionality that&apos;s overridden based on the priority of the conditions.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

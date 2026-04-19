@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LeadTime</fullName>
+    <inlineHelpText>The number of days or hours required to complete a work type. You can select the lead time unit in the work procedure record to indicate whether the lead time is in days or hours.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

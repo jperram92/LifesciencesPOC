@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SupportedStudyPhase</fullName>
+    <inlineHelpText>The phases of the research study that are supported at the healthcare facility.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

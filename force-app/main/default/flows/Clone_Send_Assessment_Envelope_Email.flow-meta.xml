@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Calls an action that generates a unique signature link for the assessment envelope record passed into the flow.</description>
+        <name>GenerateSignatureLink</name>
+        <label>Generate Signature Link</label>
+        <locationX>314</locationX>
+        <locationY>890</locationY>
+        <actionName>generateAssessmentEnvelopeSignature</actionName>
+        <actionType>generateAssessmentEnvelopeSignature</actionType>
+        <connector>
+            <targetReference>SendGuestAssessmentEmail</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>assessmentEnvelopeId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>generateAssessmentEnvelopeSignature</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <description>Calls an action that sends an email to RecipientEmail notifying them about an assessment that they need to complete.</description>
+        <name>SendAssessmentEmail</name>
+        <label>Send Assessment Email</label>
+        <locationX>50</locationX>
+        <locationY>890</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>RecipientEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>{!$Organization.Name}: You have a new assessment to complete</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>EmailBodyTextTemplate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <actionCalls>
+        <description>Calls an action that generates and sends an email with a subject of &quot;{!$Organization.Name}: You have a new Assessment to complete.&quot; and a body of EmailBody and and sends an email to RecipientEmail. To customize the email subject, change the value in the Subject input parameter. To customize the body of the email, change the value in EmailBody.</description>
+        <name>SendGuestAssessmentEmail</name>
+        <label>Send Guest Assessment Email</label>
+        <locationX>314</locationX>
+        <locationY>998</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>RecipientEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>{!$Organization.Name}: You have a new Assessment to complete.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>EmailBodyTextTemplate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Sets AccountId to the account ID of Assessment Envelope from GetAssessmentEnvelopeRecord.</description>
+        <name>SetAccountIdIsAccount</name>
+        <label>Set Account ID</label>
+        <locationX>1194</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetAssessmentEnvelopeRecord.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetRelatedAccountRecord</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets errorMessage to &quot;No recipient found&quot;.</description>
+        <name>SetErrorMessage</name>
+        <label>Set Error Message</label>
+        <locationX>1100</locationX>
+        <locationY>1550</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No recipient found</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Sets RecipientEmail to the email of Contact from GetContactRecord.</description>
+        <name>SetRecipientEmailIsContact</name>
+        <label>Set Recipient Email</label>
+        <locationX>380</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>RecipientEmail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetContactRecord.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>HasNotNullRecipientEmail</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets RecipientEmail to the email address of Contact Point Email from GetContactPointEmailRecord.</description>
+        <name>SetRecipientEmailIsContactPointEmail</name>
+        <label>Set Recipient Email</label>
+        <locationX>930</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>RecipientEmail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetContactPointEmailRecord.EmailAddress</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>HasNotNullRecipientEmail</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets RecipientEmail to the person email of Account from GetRelatedAccountRecord.</description>
+        <name>SetRecipientEmailIsPersonAccount</name>
+        <label>Set Recipient Email</label>
+        <locationX>1194</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>RecipientEmail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRelatedAccountRecord.PersonEmail</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>HasNotNullRecipientEmail</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <description>Stores the prefix for the Request Reference Record field in an assessment envelope. The default value is 184.</description>
+        <name>CareProgramSiteKeyPrefix</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>184</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>The URL of the Experience Cloud site that hosts the Assessment component.</description>
+        <name>ExperienceCloudSiteUrl</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>https://updatethisurl.internal.site.com/mypage</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <description>Determines whether RecipientEmail has a value set.</description>
+        <name>HasNotNullRecipientEmail</name>
+        <label>Has a Recipient Email?</label>
+        <locationX>380</locationX>
+        <locationY>674</locationY>
+        <defaultConnector>
+            <targetReference>SetErrorMessage</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
+        <rules>
+            <name>HasRecipientEmail</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RecipientEmail</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>IsRequestReferenceRecordACareProgramSite</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether Contact from GetContactRecord has an associated contact email.</description>
+        <name>HasValidContactEmail</name>
+        <label>Has Valid Contact Email?</label>
+        <locationX>567</locationX>
+        <locationY>458</locationY>
+        <defaultConnector>
+            <targetReference>SetErrorMessage</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
+        <rules>
+            <name>HasContactEmail</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetContactRecord.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetRecipientEmailIsContact</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the request reference record is a care program site by checking if Request Reference ID of the record in Assessment Envelope from GetAssessmentEnvelopeRecord was set to True and starts with CareProgramSiteKeyPrefix.</description>
+        <name>IsRequestReferenceRecordACareProgramSite</name>
+        <label>Is Request Reference Record a Care Program Site?</label>
+        <locationX>182</locationX>
+        <locationY>782</locationY>
+        <defaultConnector>
+            <targetReference>GenerateSignatureLink</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>IsACareProgramSite</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetAssessmentEnvelopeRecord.RequestReferenceId</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetAssessmentEnvelopeRecord.RequestReferenceId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <elementReference>CareProgramSiteKeyPrefix</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SendAssessmentEmail</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines the type of record in Assessment Envelope from GetAssessmentEnvelopeRecord.</description>
+        <name>IsWhatTypeOfRecord</name>
+        <label>Type of Record?</label>
+        <locationX>1100</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>SetErrorMessage</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsContact</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetAssessmentEnvelopeRecord.ContactId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>003</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetContactRecord</targetReference>
+            </connector>
+            <label>Contact</label>
+        </rules>
+        <rules>
+            <name>IsAccount</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetAssessmentEnvelopeRecord.AccountId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>001</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetAccountIdIsAccount</targetReference>
+            </connector>
+            <label>Account</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the email address of Contact Point Email from GetContactPointEmailRecord was set and what type of email is valid for the email envelope assessment.</description>
+        <name>WhichEmailAddressSet</name>
+        <label>Which Email Address Set?</label>
+        <locationX>1194</locationX>
+        <locationY>674</locationY>
+        <defaultConnector>
+            <targetReference>SetErrorMessage</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsContactPointEmail</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetContactPointEmailRecord.EmailAddress</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetRecipientEmailIsContactPointEmail</targetReference>
+            </connector>
+            <label>Contact Point Email</label>
+        </rules>
+        <rules>
+            <name>IsPersonAccountEmail</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetRelatedAccountRecord.PersonEmail</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetRecipientEmailIsPersonAccount</targetReference>
+            </connector>
+            <label>Person Account Email</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Clone Send Assessment Envelope Email {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
+    <label>Clone Send Assessment Envelope Email</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Gets an assessment envelope record with an ID that matches the ID passed into the flow and stores the result in the Assessment Envelope from GetAssessmentEnvelopeRecord record variable.</description>
+        <name>GetAssessmentEnvelopeRecord</name>
+        <label>Get Assessment Envelope Record</label>
+        <locationX>1100</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IsWhatTypeOfRecord</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>AssessmentEnvelope</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets a primary contact point email record with a parent ID that matches the ID of Account from GetRelatedAccountRecord. Stores the result in the Contact Point Email from GetContactPointEmailRecord record variable.</description>
+        <name>GetContactPointEmailRecord</name>
+        <label>Get Contact Point Email Record</label>
+        <locationX>1194</locationX>
+        <locationY>566</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>WhichEmailAddressSet</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetRelatedAccountRecord.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsPrimary</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>ContactPointEmail</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets a contact record with an ID that matches the contact ID of Assessment Envelope from GetAssessmentEnvelopeRecord. Stores the ID, Email, and AccountId fields in the Contact from GetContactRecord record variable.</description>
+        <name>GetContactRecord</name>
+        <label>Get Contact Record</label>
+        <locationX>567</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>HasValidContactEmail</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetAssessmentEnvelopeRecord.ContactId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contact</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Email</queriedFields>
+        <queriedFields>AccountId</queriedFields>
+        <queriedFields>FirstName</queriedFields>
+        <queriedFields>LastName</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets an account record with an ID that matches AccountId and stores the result in the Account from GetRelatedAccountRecord</description>
+        <name>GetRelatedAccountRecord</name>
+        <label>Get Related Account Record</label>
+        <locationX>1194</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GetContactPointEmailRecord</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <sourceTemplate>discoveryframework__EmailAssessment</sourceTemplate>
+    <start>
+        <locationX>974</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>GetAssessmentEnvelopeRecord</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Stores the body of the email to send to EmailRecipient. To customize the email body, change the value of this text template.</description>
+        <name>EmailBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;div style=&quot;font-family: Segoe UI;font-size: 16px;color:black;&quot;&gt;&lt;p&gt;Hello {!GetRelatedAccountRecord.Name},&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Your provider has requested some additional information from you before your next visit. The information will be used to provide better service and save you time during your visit.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;a style=&quot;display:block; margin-left: auto; margin-right:auto; width: 40%; max-width: 350px; height:25px; color: white; background: #0176d3; border: 1px solid #c9c9c9; padding:10px; text-align: center; border-radius:5px; line-height: 25px; text-decoration: none;&quot; href=&quot;{!ExperienceCloudSiteUrl}?signature={!GenerateSignatureLink.signature}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Complete Assessments&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Thank you,&lt;/p&gt;&lt;p&gt;{!$Organization.Name}&lt;/p&gt;&lt;/div&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <description>Stores the body of email notifying the recipient about a new assessment that they need to complete. To customize the email body, change the body of this text template.</description>
+        <name>EmailBodyTextTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Dear {!GetContactRecord.Name}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;I hope this message finds you well.&amp;nbsp;&lt;/span&gt;I am the Study Manager for a new clinical trial by Makana Pharma for Immunex. We are currently in the process of evaluating potential sites for our upcoming clinical trial, and we would like to invite your site to participate in this important study.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;To assess the suitability of your site, we kindly request that you complete the attached Site Feasibility Questionnaire. Your responses will provide us with valuable information regarding your site&apos;s capabilities, resources, and experience in conducting clinical trials.&lt;/p&gt;&lt;p&gt;Key Details of the Trial:&lt;/p&gt;&lt;p&gt;- Trial Name: A Phase III Study of Immunex in Patients With Lung Cancer&lt;/p&gt;&lt;p&gt;- Indication: Non-squamous Nonsmall Cell Neoplasm of Lung- Phase: [Phase]&lt;/p&gt;&lt;p&gt;- Sponsor: Makana Pharma&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Complete the &lt;/span&gt;&lt;a href=&quot;https://noodles-coffee-1696.scratch.my.site.com/SiteFeasibilityQuestionnaire/s/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Site Feasibility Questionnaire&lt;/a&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt; as per the following instructions&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Instructions for Completing the Questionnaire:&lt;/p&gt;&lt;p&gt;1. Please review the attached Site Feasibility Questionnaire.&lt;/p&gt;&lt;p&gt;2. Complete all sections of the questionnaire to the best of your ability.&lt;/p&gt;&lt;p&gt;3. Return the completed questionnaire to us by [Submission Deadline].&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Your participation in this feasibility assessment is crucial for the success of our trial, and we greatly appreciate your time and effort. Should you have any questions or require further information, please do not hesitate to contact me directly&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Thank you,&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68); font-size: 14px;&quot;&gt;{!$User.FirstName} {!$User.LastName}&lt;/span&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <description>Stores the account ID associated with the assessment envelope record.</description>
+        <name>AccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores a value when no email is sent because the assessment envelope email had no recipient and is returned as output from the flow.</description>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Store the email to be used to send the assessment envelope email.</description>
+        <name>RecipientEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the ID of the assessment envelope record that&apos;s passed into the flow.</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

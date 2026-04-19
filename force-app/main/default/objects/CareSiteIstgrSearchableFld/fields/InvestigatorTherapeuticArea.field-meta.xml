@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InvestigatorTherapeuticArea</fullName>
+    <inlineHelpText>The therapeutic areas that an investigator specializes in, for example, Oncology and Cardiology.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

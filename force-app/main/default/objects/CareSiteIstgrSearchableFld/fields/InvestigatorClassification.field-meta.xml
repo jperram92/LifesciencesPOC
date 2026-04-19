@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InvestigatorClassification</fullName>
+    <inlineHelpText>The classification of the investigator, such as Previous Partner, Key Opinion Leader, and New Member.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

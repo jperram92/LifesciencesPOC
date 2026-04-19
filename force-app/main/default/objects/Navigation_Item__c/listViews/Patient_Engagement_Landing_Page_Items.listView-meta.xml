@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Patient_Engagement_Landing_Page_Items</fullName>
+    <columns>NAME</columns>
+    <columns>Section_Heading__c</columns>
+    <columns>Sequence_Number__c</columns>
+    <columns>isActive__c</columns>
+    <columns>Icon_Name__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>PageName__c</field>
+        <operation>equals</operation>
+        <value>Patient Engagement Landing Page</value>
+    </filters>
+    <label>Patient Engagement Landing Page Items</label>
+</ListView>

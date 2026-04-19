@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EnrollmentRate</fullName>
+    <inlineHelpText>The rate of the participant enrollment at the site. This is calculated by dividing the target enrollment count by the target enrollment duration and the number of planned sites.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

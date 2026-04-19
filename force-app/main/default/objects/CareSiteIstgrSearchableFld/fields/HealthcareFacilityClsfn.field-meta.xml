@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HealthcareFacilityClsfn</fullName>
+    <inlineHelpText>The classification of the healthcare facility, such as Previous Partner, Key opinion Leader, and New Member.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsRsrchEthicalRvwSbmsSupp</fullName>
+    <inlineHelpText>Indicates whether the facility supports the regulatory document submission to the Institutional Review Board (IRB) or Ethics Committee (EC).</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

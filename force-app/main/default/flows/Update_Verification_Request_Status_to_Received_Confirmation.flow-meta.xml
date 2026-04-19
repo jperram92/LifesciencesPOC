@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customErrors>
+        <description>Sets the error message that the flow returns when there’s an error updating the care benefit verify request record.</description>
+        <name>SetErrorMessage</name>
+        <label>Set Error Message</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <customErrorMessages>
+            <errorMessage>{!UpdateCareBenefitVerifyRequestErrorTextTemplate}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <environments>Default</environments>
+    <interviewLabel>Update Verification Request Status to Received Confirmation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Verification Request Status to Received Confirmation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Updates the care benefit verify request record with an ID matching the Request Reference ID of the record that triggered the flow, setting the status to Received Confirmation.</description>
+        <name>UpdateCareBenefitVerifyRequest</name>
+        <label>Update Care Benefit Verify Request</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>SetErrorMessage</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.RequestReferenceId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>ReceivedConfirmation</stringValue>
+            </value>
+        </inputAssignments>
+        <object>CareBenefitVerifyRequest</object>
+    </recordUpdates>
+    <sourceTemplate>BnftVerfAgnt__UpdtVrfyRqstStsRcvConf</sourceTemplate>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>UpdateCareBenefitVerifyRequest</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RequestReferenceId</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>0n2</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Benefit Reverification</stringValue>
+            </value>
+        </filters>
+        <object>AssessmentEnvelope</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Stores the text template that contains the message that’s displayed to the flow user when there’s an error updating the care benefit verify request record.</description>
+        <name>UpdateCareBenefitVerifyRequestErrorTextTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>Something went wrong and we couldn’t update the care benefit verify request record.</text>
+    </textTemplates>
+</Flow>

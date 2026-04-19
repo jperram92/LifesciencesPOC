@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CompletedStudyCount</fullName>
+    <inlineHelpText>The count of research studies completed by the investigator for a specialty.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

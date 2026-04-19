@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type</fullName>
+    <inlineHelpText>Select Interim when the result indicates progress and is measured during the time period. When the result is the final measurement for the time period, select Final.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

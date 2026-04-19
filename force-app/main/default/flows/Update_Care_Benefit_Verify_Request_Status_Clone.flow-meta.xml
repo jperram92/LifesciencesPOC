@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <description>Determines whether the status of the latest care benefit verify request is Acknowledged and Verification Mode is Electronic.</description>
+        <name>IsRequestElectronicAndAcknowledged</name>
+        <label>Is Request Electronic and Acknowledged?</label>
+        <locationX>374</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsElectronicAndAcknowledged</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acknowledged</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.VerificationMode</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Electronic</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateCareBenefitVerifyRequest</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Update Care Benefit Verify Request Status Clone {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Care Benefit Verify Request Status Clone</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Updates the care benefit verify request, setting Status to Timed Out and StatusReason to StatusReasonTextTemplate.</description>
+        <name>UpdateCareBenefitVerifyRequest</name>
+        <label>Update Care Benefit Verify Request</label>
+        <locationX>242</locationX>
+        <locationY>384</locationY>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>TimedOut</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StatusReason</field>
+            <value>
+                <elementReference>StatusReasonTextTemplate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <sourceTemplate>ls_psp_bv__UpdateCareBnftVrfyRqstSts</sourceTemplate>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Acknowledged</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>VerificationMode</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Electronic</stringValue>
+            </value>
+        </filters>
+        <object>CareBenefitVerifyRequest</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <name>CheckTimedOut</name>
+            <connector>
+                <targetReference>IsRequestElectronicAndAcknowledged</targetReference>
+            </connector>
+            <label>Check Timed Out</label>
+            <offsetNumber>10</offsetNumber>
+            <offsetUnit>Minutes</offsetUnit>
+            <recordField>LastModifiedDate</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Stores the text template that contains the reason for updating the care benefit verify request status to Timed Out.</description>
+        <name>StatusReasonTextTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>The care benefit verify request has timed out.</text>
+    </textTemplates>
+</Flow>

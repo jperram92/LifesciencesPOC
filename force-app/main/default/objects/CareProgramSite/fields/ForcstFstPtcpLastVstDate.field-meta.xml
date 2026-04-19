@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ForcstFstPtcpLastVstDate</fullName>
+    <inlineHelpText>The initially projected date for the first enrolled participant at the site to complete their final scheduled study visit, as defined in the study protocol. This forecast is based on the anticipated duration of participation.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

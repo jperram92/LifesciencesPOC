@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsIstgrLicenseAvailable</fullName>
+    <inlineHelpText>Indicates whether the investigator has a license to conduct clinical trials (true) or not (false).</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

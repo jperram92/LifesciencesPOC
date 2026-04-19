@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MP_002_1005_Research_Study_Candidates</fullName>
+    <columns>Name</columns>
+    <columns>ResearchStudy</columns>
+    <columns>Candidate</columns>
+    <columns>CareProgramSite</columns>
+    <columns>Status</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ResearchStudy</field>
+        <operation>equals</operation>
+        <value>Evaluate MP-002-1005 in Subjects With Type 2 Diabetes Mellitus</value>
+    </filters>
+    <label>MP-002-1005 Research Study Candidates</label>
+</ListView>

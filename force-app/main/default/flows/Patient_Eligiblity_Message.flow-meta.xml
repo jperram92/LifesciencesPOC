@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Adds 1 to the stepNumber variable.</description>
+        <name>AssignStepNumber</name>
+        <label>Assign Step Number</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <assignmentItems>
+            <assignToReference>stepNumber</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetAccount</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets ExceptionMessage to the message that the flow returns when there’s an error getting the account record.</description>
+        <name>SetErrorMessage</name>
+        <label>Set Error Message</label>
+        <locationX>578</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>ExceptionMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>$Flow.FaultMessage</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>CreateProcessException</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets isPatientEligible to True.</description>
+        <name>SetPatientEligibility</name>
+        <label>Set Patient Eligibility</label>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>isPatientEligible</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Sets ExceptionMessage to PatientIneligibleMessageTextTemplate and isAppealApplicable to True.</description>
+        <name>SetPatientIneligibleMessage</name>
+        <label>Set Patient Ineligible Message</label>
+        <locationX>314</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>ExceptionMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>The patient isn&apos;t eligible for financial assistance. Verify if the patient resides in the US, is from Texas or Arizona, and is over 18 years old.</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>isAppealApplicable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CreateProcessException</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <description>Stores the name of the state of Arizona.</description>
+        <name>ArizonaState</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Arizona</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Stores the country of the patient to be enrolled in a financial assistance program.</description>
+        <name>EligibleCountry</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>US</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Stores the minimum eligible age for a patient to be enrolled in a financial assistance program.</description>
+        <name>MinimumEligibleAge</name>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>18.0</numberValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Stores the name of the state of Texas</description>
+        <name>TexasState</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Texas</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <description>Determines whether the patient is eligible to be enrolled in a financial assistance program by checking if the account’s Billing Country matches EligibleCountry, Billing State/Province matches ArizonaState or TexasState, and PatientAgeFormula is greater than Age.</description>
+        <name>IsPatientEligibleForFinancialAssistance</name>
+        <label>Is Patient Eligible for Financial Assistance?</label>
+        <locationX>182</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>SetPatientIneligibleMessage</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsEligible</name>
+            <conditionLogic>1 AND (2 OR 3) AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>GetAccount.BillingCountry</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>EligibleCountry</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetAccount.BillingState</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ArizonaState</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetAccount.BillingState</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>TexasState</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>PatientAgeFormula</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>MinimumEligibleAge</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetPatientEligibility</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <description>Calculates the patient’s age.</description>
+        <name>PatientAgeFormula</name>
+        <dataType>Number</dataType>
+        <expression>(TODAY() - {!GetAccount.PersonBirthdate})/365</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>Patient Eligiblity Message {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Patient Eligiblity Message</label>
+    <overriddenFlow>LsFinclAsst__CheckPatientEligibility</overriddenFlow>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Creates a process exception record using the information passed into the flow. Stores the ID of the new process exception record in Process ExceptionId from CreateProcessException.</description>
+        <name>CreateProcessException</name>
+        <label>Create Process Exception</label>
+        <locationX>314</locationX>
+        <locationY>566</locationY>
+        <connector>
+            <targetReference>UpdateApplicationForm</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AttachedToId</field>
+            <value>
+                <elementReference>applicationFormId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ExternalReference</field>
+            <value>
+                <elementReference>stepNumber</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FlowOrchInstRelaObjId</field>
+            <value>
+                <elementReference>flowOrchInstRelaObjId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Message</field>
+            <value>
+                <elementReference>ExceptionMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Triaged</stringValue>
+            </value>
+        </inputAssignments>
+        <object>ProcessException</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Gets an account record with an ID that matches the Account ID associated with the applicant record passed into the flow. Stores the result in the Account from GetAccount record variable.</description>
+        <name>GetAccount</name>
+        <label>Get Account</label>
+        <locationX>182</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IsPatientEligibleForFinancialAssistance</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>SetErrorMessage</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>applicant.CareProgramEnrollee.Account.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update the application form record with an ID that matches applicationFormId, setting the stage to Rejected.</description>
+        <name>UpdateApplicationForm</name>
+        <label>Update Application Form</label>
+        <locationX>314</locationX>
+        <locationY>674</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>applicationFormId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Stage</field>
+            <value>
+                <stringValue>Rejected</stringValue>
+            </value>
+        </inputAssignments>
+        <object>ApplicationForm</object>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>AssignStepNumber</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Stores the text template that stores the message that the flow returns when the patient isn’t eligible for financial assistance.</description>
+        <name>PatientIneligibleMessageTextTemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>The patient isn’t eligible for financial assistance.</text>
+    </textTemplates>
+    <variables>
+        <description>Stores the applicant record that was passed into the flow.</description>
+        <name>applicant</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Applicant</objectType>
+    </variables>
+    <variables>
+        <description>Stores the application form ID that was passed into the flow.</description>
+        <name>applicationFormId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the message that’s assigned to the Message field of the process exception record to be created</description>
+        <name>ExceptionMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the flow orchestration instance related object ID that was passed into the flow.</description>
+        <name>flowOrchInstRelaObjId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores a boolean value that indicates whether an appeal is applicable for a patient or not. The default value is False. This value is available as output from the flow.</description>
+        <name>isAppealApplicable</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Stores a boolean value that indicates whether a patient is eligible to be enrolled in a financial assistance program or not. The default value is False. This value is available as output from the flow.</description>
+        <name>isPatientEligible</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Stores the step number of the current stage</description>
+        <name>stepNumber</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>0</scale>
+    </variables>
+</Flow>

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <constants>
+        <description>Stores the envelope name for the patient assessment. The default value is Benefit Reverification.</description>
+        <name>PatientAssessmentEnvelope</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Benefit Reverification</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Stores the text value of the event status when the assessment response is received from the patient. The default value is PatientAssessmentResponseReceived.</description>
+        <name>PatientResponseReceivedEventStatus</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PatientAssessmentResponseReceived</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Stores the envelope name for the payor assessment. The default value is Payor Assessment.</description>
+        <name>PayorAssessmentEnvelope</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Payor Assessment</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Stores the text value of the event status when the assessment response is received from the payor. The default value is PayorAssessmentResponseReceived.</description>
+        <name>PayorResponseReceivedEventStatus</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PayorAssessmentResponseReceived</stringValue>
+        </value>
+    </constants>
+    <customErrors>
+        <description>Sets the error message that the flow returns when there’s an error creating the CareBnftVrfyRqstStsChgEvent record.</description>
+        <name>SetCreateCareBnftVrfyRqstStsChgEventErrorMessage</name>
+        <label>Set Error Message</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <customErrorMessages>
+            <errorMessage>{!CreateCareBnftVrfyRqstStsChgEventErrorTextTemplate}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>Sets the error message that the flow returns when there’s an error updating the care benefit verify request record.</description>
+        <name>SetErrorMessage</name>
+        <label>Set Error Message</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <customErrorMessages>
+            <errorMessage>{!UpdateCareBenefitVerifyRequestErrorTextTemplate}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>Sets the error message that the flow returns when there’s an error creating the CareBnftVrfyRqstStsChgEvent record.</description>
+        <name>SetErrorMessageCreateCareBnftVrfyRqstStsChgEvent</name>
+        <label>Set Error Message</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <customErrorMessages>
+            <errorMessage>{!CreateCareBnftVrfyRqstStsChgEventErrorTextTemplate}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <description>Determines whether a related care benefit verify request exists by checking if the Care Benefit Verify Request ID field of the record in the Care Benefit Verify Request from Get Related Care Benefit Verify Request record variable has a value.</description>
+        <name>Have_RelatedCareBenefitVerifyRequest</name>
+        <label>Have Related Care Benefit Verify Request?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_RelatedCareBenefitVerifyRequest</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetRelatedCareBnftVrfyRqst.RelatedCareBnftVerifyRequestId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CreateCareBenefitVerifyRequestStatusChangedEventPayorResponse</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether a related care benefit verify request exists by checking if the Care Benefit Verify Request ID field of the record in the Care Benefit Verify Request from Get Related Care Benefit Verify Request record variable has a value.</description>
+        <name>HaveRelatedCareBenefitVerifyRequest</name>
+        <label>Have Related Care Benefit Verify Request?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
+        <rules>
+            <name>HasRelatedCareBenefitVerifyRequest</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetRelatedCareBnftVrfyRqst.RelatedCareBnftVerifyRequestId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CreateCareBenefitVerifyRequestStatusChangedEventPatientResponse</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the Name of the triggering record matches the value of the PatientAssessmentEnvelope or the PayorAssessmentEnvelope.</description>
+        <name>WhichEnvelopeName</name>
+        <label>Which Envelope Name?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>PatientAssessment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>PatientAssessmentEnvelope</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateCareBenefitVerifyRequest</targetReference>
+            </connector>
+            <label>Patient Assessment</label>
+        </rules>
+        <rules>
+            <name>PayorAssessment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>PayorAssessmentEnvelope</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Have_RelatedCareBenefitVerifyRequest</targetReference>
+            </connector>
+            <label>Payor Assessment</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Update Verification Request Status to Pending Confirmation Clone {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Verification Request Status to Pending Confirmation Clone</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Creates a care benefit verify request status changed event record, setting the Record Identifier to Care Benefit Verify Request ID, and status to PatientResponseReceivedEventStatus.</description>
+        <name>CreateCareBenefitVerifyRequestStatusChangedEventPatientResponse</name>
+        <label>Create Care Benefit Verify Request Status Changed Event</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>SetErrorMessageCreateCareBnftVrfyRqstStsChgEvent</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>RecordIdentifier</field>
+            <value>
+                <elementReference>$Record.RequestReferenceId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <elementReference>PatientResponseReceivedEventStatus</elementReference>
+            </value>
+        </inputAssignments>
+        <object>CareBnftVrfyRqstStsChgEvent</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <description>Creates a care benefit verify request status changed event record, setting the Record Identifier to Care Benefit Verify Request ID, and status to PayorResponseReceivedEventStatus.</description>
+        <name>CreateCareBenefitVerifyRequestStatusChangedEventPayorResponse</name>
+        <label>Create Care Benefit Verify Request Status Changed Event</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <faultConnector>
+            <targetReference>SetCreateCareBnftVrfyRqstStsChgEventErrorMessage</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>RecordIdentifier</field>
+            <value>
+                <elementReference>$Record.RequestReferenceId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <elementReference>PayorResponseReceivedEventStatus</elementReference>
+            </value>
+        </inputAssignments>
+        <object>CareBnftVrfyRqstStsChgEvent</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Gets the care benefit verify request record with an ID that matches the Request Reference ID of the triggering record. Stores the ID and RelatedCareBnftVerifyRequestId of the result in the Care Benefit Verify Request from Get Related Care Benefit Verify Request record variable.</description>
+        <name>GetRelatedCareBnftVrfyRqst</name>
+        <label>Get Related Care Benefit Verify Request</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>WhichEnvelopeName</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.RequestReferenceId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CareBenefitVerifyRequest</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>RelatedCareBnftVerifyRequestId</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Updates the care benefit verify request record with an ID matching the Request Reference ID of the record that triggered the flow, setting the status to Received Confirmation.</description>
+        <name>UpdateCareBenefitVerifyRequest</name>
+        <label>Update Care Benefit Verify Request</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>HaveRelatedCareBenefitVerifyRequest</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>SetErrorMessage</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.RequestReferenceId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>ReceivedConfirmation</stringValue>
+            </value>
+        </inputAssignments>
+        <object>CareBenefitVerifyRequest</object>
+    </recordUpdates>
+    <sourceTemplate>BnftVerfAgnt__UpdtVrfyRqstStsRcvConf</sourceTemplate>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>GetRelatedCareBnftVrfyRqst</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
+        <filters>
+            <field>RequestReferenceId</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>0n2</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Benefit Reverification</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Payor Assessment</stringValue>
+            </value>
+        </filters>
+        <object>AssessmentEnvelope</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Stores the text template that contains the message that&apos;s displayed to the flow user when there&apos;s an error creating the CareBnftVrfyRqstStsChgEvent record.</description>
+        <name>CreateCareBnftVrfyRqstStsChgEventErrorTextTemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Something went wrong and we couldn’t create the care benefit verify request status changed event record.</text>
+    </textTemplates>
+    <textTemplates>
+        <description>Stores the text template that contains the message that’s displayed to the flow user when there’s an error updating the care benefit verify request record.</description>
+        <name>UpdateCareBenefitVerifyRequestErrorTextTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>Something went wrong and we couldn’t update the care benefit verify request record.</text>
+    </textTemplates>
+</Flow>

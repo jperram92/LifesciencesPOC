@@ -1,0 +1,1327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Calls an action to save the benefit verification step details when a timeout occurs for the Payer assessment response.</description>
+        <name>SavePayerAssessmentTimeoutMessage</name>
+        <label>Save Payer Assessment Timeout Message</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>saveBenVerfLogs</actionName>
+        <actionType>saveBenVerfLogs</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>logMessage</name>
+            <value>
+                <elementReference>PayerAssessmentResponseTimedoutTextTemplate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>flowOrchestrationInstanceRelatedObjId</name>
+            <value>
+                <elementReference>flowOrchestratorInstanceRelatedObjectId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>careBenefitVerifyRequestId</name>
+            <value>
+                <elementReference>careBenefitVerifyRequestId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>benefitsVerificationStepNumber</name>
+            <value>
+                <elementReference>stepNumber</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>saveBenVerfLogs</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Sets the AppliedLimit field on the UpdateCoverageBenefitItemLimit variable to the value of the ResponseValue field and the coverage Benefit Item limit Id variable to the value of the coverage benefit item limit id field of the current record in the IterateOverAssessmentQuestionResponses loop. Adds the UpdateCoverageBenefitItemLimit record variable to the UpdateCoverageBenefitItemLimitList record collection.</description>
+        <name>SetAppliedLimitValue</name>
+        <label>Set Applied Limit Value</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItemLimit.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverCoverageBenefitItemLimits.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItemLimit.AppliedLimit</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverAssessmentQuestionResponses.ResponseValue</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItemLimitList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>UpdateCoverageBenefitItemLimit</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverCoverageBenefitItemLimits</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the AssessmentId variable to the AssessmentId of the current record in the IterateOverAssessmentEnvelopeItems loop.</description>
+        <name>SetAssessmentId</name>
+        <label>Set Assessment ID</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>AssessmentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverAssessmentEnvelopeItems.AssessmentId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverAssessmentEnvelopeItems</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the AssessmentQuestionName variable to the Name field of the current record in the IterateOverAssessmentQuestionResponsesGetVersionNumber loop.</description>
+        <name>SetAssessmentQuestionResponseName</name>
+        <label>Set Assessment Question Response Name</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>AssessmentQuestionName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverAssessmentQuestionResponsesGetVersionNumber.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>SetAssessmentVersionNumber</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the VersionNumber variable to the value calculated by the ExtractVersionFormula.</description>
+        <name>SetAssessmentVersionNumber</name>
+        <label>Set Assessment Version Number</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>VersionNumber</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ExtractVersionFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetCoverageBenefit</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the BenefitNotes field on the UpdatedCoverageBenefit variable to the value of the ResponseValue field of the current record in the IterateOverAssessmentQuestionResponses loop.</description>
+        <name>SetBenefitNotes</name>
+        <label>Set Benefit Notes</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>UpdatedCoverageBenefit.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCoverageBenefit.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdatedCoverageBenefit.BenefitNotes</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverAssessmentQuestionResponses.ResponseValue</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverAssessmentQuestionResponses</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the CoverageBenefitItemId variable to the ID of the current record in the IterateOverCoverageBenefitItems loop.</description>
+        <name>SetCoverageBenefitItemId</name>
+        <label>Set Coverage Benefit Item ID</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>CoverageBenefitItemId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverCoverageBenefitItems.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverCoverageBenefitItems</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the FinalCoverageStatusCodeId field on the UpdatedCoverageBenefit variable to the value of the ResponseValue field of the current record in the IterateOverAssessmentQuestionResponses loop.</description>
+        <name>SetFinalCoverageStatusCodeId</name>
+        <label>Set Final Coverage Status Code Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>UpdatedCoverageBenefit.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCoverageBenefit.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdatedCoverageBenefit.FinalCoverageStatusCodeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IterateOverAssessmentQuestionResponses.ResponseValue</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverAssessmentQuestionResponses</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the IsInPlanNetwork field on the UpdateCoverageBenefitItem variable to true, the InNetworkCoverage field to &apos;In Network,&apos; and the OutofNetworkCoverage field to an empty string. Also sets the ID of the UpdateCoverageBenefitItem variable to the CoverageBenefitItemId variable.</description>
+        <name>SetInNetworkCoverage</name>
+        <label>Set In-Network Coverage</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.IsInPlanNetwork</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.InNetworkCoverage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Network</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.OutofNetworkCoverage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CoverageBenefitItemId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverAssessmentQuestionResponses</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the IsCoverageBenefitItemRequiresSave flag to true.</description>
+        <name>SetIsCoverageBenefitItemRqrSaveFlag</name>
+        <label>Set Coverage BenefitItem Requires Save Flag</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>IsCoverageBenefitItemRequiresSave</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SetWhichCoverageBenefitItemField</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the IsCoverageBenefitRequiresSave flag to true and assigns the Coverage Benefit from GetCoverageBenefit record variable to the CoverageBenefit variable.</description>
+        <name>SetIsCoverageBenefitRequiresSaveFlag</name>
+        <label>Set IsCoverageBenefitRequiresSave Flag</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>IsCoverageBenefitRequiresSave</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CoverageBenefit</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCoverageBenefit</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SetWhichCoverageBenefitField</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the IsPreauthorizationRequired field on the UpdateCoverageBenefitItem variable to false. Also sets the ID of the UpdateCoverageBenefitItem variable to the CoverageBenefitItemId variable.</description>
+        <name>SetIsPreauthorizationRequiredFalse</name>
+        <label>Set Preauthorization Required</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.IsPreauthorizationRequired</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CoverageBenefitItemId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverAssessmentQuestionResponses</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the IsInPlanNetwork field on the UpdateCoverageBenefitItem variable to false, the OutofNetworkCoverage field to &apos;Out of Network,&apos; and the InNetworkCoverage field to an empty string. Also sets the ID of the UpdateCoverageBenefitItem variable to the CoverageBenefitItemId variable.</description>
+        <name>SetOutOfNetworkCoverage</name>
+        <label>Set Out-of-Network Coverage</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.IsInPlanNetwork</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.InNetworkCoverage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.OutofNetworkCoverage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Out of Network</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CoverageBenefitItemId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverAssessmentQuestionResponses</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the isPayerAssessmentResponseReceived variable to true.</description>
+        <name>SetPayerAssessmentResponseStatus</name>
+        <label>Set Payer Assessment Response Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>isPayorAssessmentResponseReceived</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetCareBenefitVerifyRequest</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the isPayerAssessmentResponseReceived variable to false.</description>
+        <name>SetPayerAssessmentResponseStatusFalse</name>
+        <label>Set Payer Assessment Response Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>isPayorAssessmentResponseReceived</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SavePayerAssessmentTimeoutMessage</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the IsInPlanNetwork, InNetworkCoverage, and OutofNetworkCoverage fields on the UpdateCoverageBenefitItem variable to false and empty strings. Also sets the ID of the UpdateCoverageBenefitItem variable to the CoverageBenefitItemId variable.</description>
+        <name>SetPlanNetworkNotApplicable</name>
+        <label>Set Plan Network Not Applicable</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.IsInPlanNetwork</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.InNetworkCoverage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.OutofNetworkCoverage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CoverageBenefitItemId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverAssessmentQuestionResponses</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the IsPreauthorizationRequired field on the UpdateCoverageBenefitItem variable to true. Also sets the ID of the UpdateCoverageBenefitItem variable to the CoverageBenefitItemId variable.</description>
+        <name>SetPreauthorizationRequiredTrue</name>
+        <label>Set Preauthorization Required</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.IsPreauthorizationRequired</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdateCoverageBenefitItem.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CoverageBenefitItemId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IterateOverAssessmentQuestionResponses</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <description>Stores the text value of the status of the platform event that indicates the Payer assessment response was received.</description>
+        <name>PayerAssessmentResponseReceivedEventStatus</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PayorAssessmentResponseReceived</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <description>Stores the name of the Payer Assessment record.</description>
+        <name>PayorAssessmentEnvelopeName</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Payor Assessment</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <description>Determines whether the DeveloperName of the current record in the IterateOverCoverageBenefitItemLimits loop matches the name derived from the ExtractCoverageBenefitItemLimitNameFormula.</description>
+        <name>DoesCareLimitTypeNameMatch</name>
+        <label>Does Care Limit Type Name Match?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>IterateOverCoverageBenefitItemLimits</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsMatchingCareLimitTypeName</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverCoverageBenefitItemLimits.CareLimitType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ExtractCoverageBenefitItemLimitNameFormula</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetAppliedLimitValue</targetReference>
+            </connector>
+            <label>Matching Care Limit Type Name</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the IsCoverageBenefitItemRequiresSave variable is true.</description>
+        <name>DoesCoverageBenefitItemRequireAnUpdate</name>
+        <label>Does CoverageBenefitItem Require an Update?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>DoesCoverageBenefitRequireAnUpdate</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Does Not Require an Update (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsUpdateRequired</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsCoverageBenefitItemRequiresSave</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Coverage_Benefit_Item</targetReference>
+            </connector>
+            <label>Requires an Update</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the IsCoverageBenefitRequiresSave variable is true.</description>
+        <name>DoesCoverageBenefitRequireAnUpdate</name>
+        <label>Does CoverageBenefit Require an Update?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Does Not Require an Update (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsCoverageBenefitUpdateRequired</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsCoverageBenefitRequiresSave</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Coverage_Benefit</targetReference>
+            </connector>
+            <label>Requires an Update</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the UpdateCoverageBenefitItemLimitList collection is not empty.</description>
+        <name>IsCoverageBenefitItemLimitUpdateRequired</name>
+        <label>Is Coverage Benefit Item Limit Update Required?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>DoesCoverageBenefitItemRequireAnUpdate</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsRequired</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UpdateCoverageBenefitItemLimitList</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateCoverageBenefitItemLimits</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the IsPreauthorizationRequired field on the CoverageBenefitItem record should be set to true or false.</description>
+        <name>SetPreauthorizationRequired</name>
+        <label>Set Preauthorization Required</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>SetIsPreauthorizationRequiredFalse</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsPreauthorizationRequired</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverAssessmentQuestionResponses.ResponseValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetPreauthorizationRequiredTrue</targetReference>
+            </connector>
+            <label>Preauthorization Required</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines which CoverageBenefit field to update based on the name of the current record in the IterateOverAssessmentQuestionResponses loop.</description>
+        <name>SetWhichCoverageBenefitField</name>
+        <label>Set Which Coverage Benefit Field?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>IterateOverAssessmentQuestionResponses</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsFinalCoverageStatusCodeIdField</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverAssessmentQuestionResponses.Name</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <elementReference>AssessmentResponseNameFinalCvrStsCdFmla</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetFinalCoverageStatusCodeId</targetReference>
+            </connector>
+            <label>FinalCoverageStatusCodeId Field</label>
+        </rules>
+        <rules>
+            <name>IsBenefitNotesField</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverAssessmentQuestionResponses.Name</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <elementReference>AssessmentResponseNameBenefitNoteFmla</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetBenefitNotes</targetReference>
+            </connector>
+            <label>BenefitNotes Field</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines which CoverageBenefitItem field to update based on the name of the current record in the IterateOverAssessmentQuestionResponses loop.</description>
+        <name>SetWhichCoverageBenefitItemField</name>
+        <label>Set Which CoverageBenefitItem Field?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>IterateOverAssessmentQuestionResponses</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsInPlanNetworkField</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverAssessmentQuestionResponses.Name</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <elementReference>IsInPlanNetworkAssessmentQuestionNameFormula</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetWhichPlanNetworkStatus</targetReference>
+            </connector>
+            <label>In PlanNetwork Field</label>
+        </rules>
+        <rules>
+            <name>IsPreauthorizationRequiredField</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverAssessmentQuestionResponses.Name</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <elementReference>IsPreauthorizationRequiredAssessmentQuestionNameFormula</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetPreauthorizationRequired</targetReference>
+            </connector>
+            <label>Preauthorization Required Field</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines which object to update based on the name of the current record in the IterateOverAssessmentQuestionResponses loop.</description>
+        <name>SetWhichObject</name>
+        <label>Set Which Object?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>IterateOverAssessmentQuestionResponses</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsCoverageBenefitObject</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverAssessmentQuestionResponses.Name</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <elementReference>CoverageBenefitPrefixFormula</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetIsCoverageBenefitRequiresSaveFlag</targetReference>
+            </connector>
+            <label>CoverageBenefit Object</label>
+        </rules>
+        <rules>
+            <name>IsCoverageBenefitItemObject</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverAssessmentQuestionResponses.Name</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <elementReference>CoverageBenefitItemPrefixFormula</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetIsCoverageBenefitItemRqrSaveFlag</targetReference>
+            </connector>
+            <label>CoverageBenefitItem Object</label>
+        </rules>
+        <rules>
+            <name>IsCoverageBenefitItemLimitObject</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverAssessmentQuestionResponses.Name</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <elementReference>CoverageBenefitItemLimitPrefixFormula</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>IterateOverCoverageBenefitItemLimits</targetReference>
+            </connector>
+            <label>CoverageBenefitItemLimit Object</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Determines whether the plan network status is In, Out, or Not Applicable based on the response value of the current record in the IterateOverAssessmentQuestionResponses loop.</description>
+        <name>SetWhichPlanNetworkStatus</name>
+        <label>Set Which Plan Network Status?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>IterateOverAssessmentQuestionResponses</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other (Default)</defaultConnectorLabel>
+        <rules>
+            <name>IsInNetwork</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverAssessmentQuestionResponses.ResponseValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetInNetworkCoverage</targetReference>
+            </connector>
+            <label>In-Plan Network</label>
+        </rules>
+        <rules>
+            <name>IsOutOfNetwork</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverAssessmentQuestionResponses.ResponseValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Out</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetOutOfNetworkCoverage</targetReference>
+            </connector>
+            <label>Out-of-Plan Network</label>
+        </rules>
+        <rules>
+            <name>IsNotApplicableNetwork</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IterateOverAssessmentQuestionResponses.ResponseValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetPlanNetworkNotApplicable</targetReference>
+            </connector>
+            <label>Not Applicable Plan Network</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <description>Generates the name prefix for the Benefits Notes field by combining a fixed prefix &quot;LSC_BV_v&quot;, the version number, and _CoverageBenefit_BenefitsNNotes. Used in IterateOverAssessmethe IterateOverAssessmentQuestionResponsesntQuestionResponses loop that checks whether a response name starts with this value so the flow can capture the BenefitsNotes.</description>
+        <name>AssessmentResponseNameBenefitNoteFmla</name>
+        <dataType>String</dataType>
+        <expression>&quot;LSC_BV_v&quot; &amp; TEXT({!VersionNumber}) &amp; &quot;_CoverageBenefit_&quot; &amp; &quot;BenefitNotes&quot;</expression>
+    </formulas>
+    <formulas>
+        <description>Generates the name prefix for the Final Coverage Status Code field by combining a fixed prefix &quot;LSC_BV_v&quot;, the version number, and _CoverageBenefit_FinalCoverageStatusCodeId. Used in the IterateOverAssessmentQuestionResponses loop condition that checks whether a response name starts with this value so the flow can capture the FinalCoverageStatusCodeId.</description>
+        <name>AssessmentResponseNameFinalCvrStsCdFmla</name>
+        <dataType>String</dataType>
+        <expression>&quot;LSC_BV_v&quot; &amp; TEXT({!VersionNumber}) &amp; &quot;_CoverageBenefit_&quot; &amp; &quot;FinalCoverageStatusCodeId&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>CareLimitTypeNameFromAssessmentQuestionResponseNameFormula</name>
+        <dataType>String</dataType>
+        <expression>{!IterateOverAssessmentQuestionResponses.Name}</expression>
+    </formulas>
+    <formulas>
+        <description>Generates a prefix for CoverageBenefitItem record by combining the static text &quot;LSC_BV_v&quot;, the text value of the VersionNumber variable, and the static text &quot;_CoverageBenefitItemlist_&quot;</description>
+        <name>CoverageBenefitItemLimitPrefixFormula</name>
+        <dataType>String</dataType>
+        <expression>&quot;LSC_BV_v&quot; &amp; TEXT({!VersionNumber}) &amp; &quot;_CoverageBenefitItemLimit_&quot;</expression>
+    </formulas>
+    <formulas>
+        <description>Generates a prefix for CoverageBenefitItem record by combining the static text &quot;LSC_BV_v&quot;, the text value of the VersionNumber variable, and the static text &quot;_CoverageBenefitItem_&quot;</description>
+        <name>CoverageBenefitItemPrefixFormula</name>
+        <dataType>String</dataType>
+        <expression>&quot;LSC_BV_v&quot; &amp; Text({!VersionNumber}) &amp; &quot;_CoverageBenefitItem_&quot;</expression>
+    </formulas>
+    <formulas>
+        <description>Generates a prefix for CoverageBenefit record by combining the static text &quot;LSC_BV_v&quot;, the text value of the VersionNumber variable, and the static text &quot;_CoverageBenefit_&quot;</description>
+        <name>CoverageBenefitPrefixFormula</name>
+        <dataType>String</dataType>
+        <expression>&quot;LSC_BV_v&quot; &amp; TEXT({!VersionNumber}) &amp; &quot;_CoverageBenefit_&quot;</expression>
+    </formulas>
+    <formulas>
+        <description>Removes a specific prefix and suffix from the name of the current record in the IterateOverAssessmentQuestionResponses loop. It first removes the prefix that contains &apos;LSC_BV_v&apos;, the flow version number, and &apos;CoverageBenefitItemLimit_&apos;.</description>
+        <name>ExtractCoverageBenefitItemLimitNameFormula</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE({!IterateOverAssessmentQuestionResponses.Name}, &quot;LSC_BV_v&quot; &amp; TEXT({!VersionNumber}) &amp; &quot;_CoverageBenefitItemLimit_&quot;,&quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Extracts the version number from the name of the Assessment Question Response and stores it in the VersionNumber variable.</description>
+        <name>ExtractVersionFormula</name>
+        <dataType>Number</dataType>
+        <expression>VALUE(
+MID(
+  {!AssessmentQuestionName},
+  9,
+  FIND(&quot;_&quot;, {!AssessmentQuestionName}, 9) - 9
+)
+)</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>IsInPlanNetworkAssessmentQuestionNameFormula</name>
+        <dataType>String</dataType>
+        <expression>&quot;LSC_BV_v&quot; &amp; TEXT({!VersionNumber}) &amp; &quot;_CoverageBenefitItem_&quot; &amp; &quot;IsInPlanNetwork&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>IsPreauthorizationRequiredAssessmentQuestionNameFormula</name>
+        <dataType>String</dataType>
+        <expression>&quot;LSC_BV_v&quot; &amp; TEXT({!VersionNumber}) &amp; &quot;_CoverageBenefitItem_&quot; &amp; &quot;IsPreauthorizationRequired&quot;</expression>
+    </formulas>
+    <interviewLabel>Copy Payer Assessment Response to Care Benefit Verify Request Records {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Copy Payer Assessment Response to Care Benefit Verify Request Records Clone</label>
+    <loops>
+        <description>Repeats actions for each record in the Assessment Envelope Items from GetPayerAssessmentEnvelope record collection.</description>
+        <name>IterateOverAssessmentEnvelopeItems</name>
+        <label>Iterate Over Assessment Envelope Items</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>GetPayerAssessmentEnvelope.AssessmentEnvelopeItems</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>SetAssessmentId</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>GetAssessmentQuestionResponses</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Repeats actions for each record in the Assessment Question Responses from GetAssessmentQuestionResponses record collection.</description>
+        <name>IterateOverAssessmentQuestionResponses</name>
+        <label>Iterate Over Assessment Question Responses</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>GetAssessmentQuestionResponses</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>SetWhichObject</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>IsCoverageBenefitItemLimitUpdateRequired</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Repeats actions for each record in the Assessment Question Responses from GetAssessmentQuestionResponses record collection.</description>
+        <name>IterateOverAssessmentQuestionResponsesGetVersionNumber</name>
+        <label>Iterate Over Assessment Question Responses</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>GetAssessmentQuestionResponses</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>SetAssessmentQuestionResponseName</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>SetAssessmentVersionNumber</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Repeats actions for each record in the Coverage Benefit Item Limits from GetCoverageBenefitItemLimits record collection.</description>
+        <name>IterateOverCoverageBenefitItemLimits</name>
+        <label>Iterate Over Coverage Benefit Item Limits</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>GetCoverageBenefitItemLimits</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>DoesCareLimitTypeNameMatch</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>IterateOverAssessmentQuestionResponses</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Repeats actions for each record in the Coverage Benefit Items from GetCoverageBenefit record collection.</description>
+        <name>IterateOverCoverageBenefitItems</name>
+        <label>Iterate Over Coverage Benefit Items</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>GetCoverageBenefit.CoverageBenefitItems</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>SetCoverageBenefitItemId</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>GetCoverageBenefitItemLimits</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <overriddenFlow>BnftVerfAgnt__CpyPyrAsmtResptoCbvrRec</overriddenFlow>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Gets the Assessment Question Response records with an Assessment ID that matches the AssessmentId variable. Stores the Id, Name, and ResponseValue of the result in the Assessment Question Responses from GetAssessmentQuestionResponses record collection.</description>
+        <name>GetAssessmentQuestionResponses</name>
+        <label>Get Assessment Question Responses</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IterateOverAssessmentQuestionResponsesGetVersionNumber</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AssessmentId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AssessmentId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>AssessmentQuestionResponse</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>ResponseValue</queriedFields>
+        <queriedFields>IsTrueOrFalseValue</queriedFields>
+        <sortField>Id</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets the Care Benefit Verify Request record with an ID that matches careBenefitVerifyRequestId. Stores the Id, Status, AuthrizedPrescriptionId, and CoverageBenefitId of the result in the Care Benefit Verify Request from GetCareBenefitVerifyRequest record variable.</description>
+        <name>GetCareBenefitVerifyRequest</name>
+        <label>Get Care Benefit Verify Request</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GetPayerAssessmentEnvelope</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>careBenefitVerifyRequestId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CareBenefitVerifyRequest</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status</queriedFields>
+        <queriedFields>AuthorizedPrescriptionId</queriedFields>
+        <queriedFields>CoverageBenefitId</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCoverageBenefit</name>
+        <label>Get Coverage Benefit</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IterateOverCoverageBenefitItems</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCareBenefitVerifyRequest.CoverageBenefitId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CoverageBenefit</object>
+        <queriedFields>BenefitNotes</queriedFields>
+        <queriedFields>FinalCoverageStatusCodeId</queriedFields>
+        <queriedFields>OutcomeStatusCodeId</queriedFields>
+        <queriedFields>StatusCodeId</queriedFields>
+        <queriedFields>Id</queriedFields>
+        <relatedRecords>
+            <getFirstRecordOnly>true</getFirstRecordOnly>
+            <queriedFields>Id</queriedFields>
+            <relatedObject>CoverageBenefitItem</relatedObject>
+            <relationshipField>CoverageBenefitItems</relationshipField>
+        </relatedRecords>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets the Coverage Benefit Item Limit records that matches the CoverageBenefitItemId variable. Stores the results in the Coverage Benefit Item Limits from GetCoverageBenefitItemLimits record collection.</description>
+        <name>GetCoverageBenefitItemLimits</name>
+        <label>Get Coverage Benefit Item Limits</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IterateOverAssessmentQuestionResponses</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CoverageBenefitItemId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CoverageBenefitItemId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>CoverageBenefitItemLimit</object>
+        <queriedFields>AppliedLimit</queriedFields>
+        <queriedFields>Id</queriedFields>
+        <relatedRecords>
+            <getFirstRecordOnly>true</getFirstRecordOnly>
+            <queriedFields>Id</queriedFields>
+            <queriedFields>DeveloperName</queriedFields>
+            <relatedObject>CareLimitType</relatedObject>
+            <relationshipField>CareLimitType</relationshipField>
+        </relatedRecords>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Gets the Assessment Envelope record with a RequestReferenceId that matches careBenefitVerifyRequestId, a name that matches PayerAssessmentEnvelopeName, and a status that is completed. Stores the AssessmentEnvelopeItem from GetAssessmentEnvelope in the AssessmentEnvelopeItem from GetPayerAssessmentEnvelope record variable.</description>
+        <name>GetPayerAssessmentEnvelope</name>
+        <label>Get Payer Assessment Envelope</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>IterateOverAssessmentEnvelopeItems</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RequestReferenceId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>careBenefitVerifyRequestId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>PayorAssessmentEnvelopeName</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>AssessmentEnvelope</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status</queriedFields>
+        <relatedRecords>
+            <getFirstRecordOnly>true</getFirstRecordOnly>
+            <queriedFields>Id</queriedFields>
+            <queriedFields>AssessmentId</queriedFields>
+            <relatedObject>AssessmentEnvelopeItem</relatedObject>
+            <relationshipField>AssessmentEnvelopeItems</relationshipField>
+        </relatedRecords>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Updates a record using the values from the UpdatedCoverageBenefit record variable.</description>
+        <name>Update_Coverage_Benefit</name>
+        <label>Update Coverage Benefit</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputReference>UpdatedCoverageBenefit</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Updates a record using the values from the UpdateCoverageBenefitItem record variable.</description>
+        <name>Update_Coverage_Benefit_Item</name>
+        <label>Update Coverage Benefit Item</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>DoesCoverageBenefitRequireAnUpdate</targetReference>
+        </connector>
+        <inputReference>UpdateCoverageBenefitItem</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Updates records using the values in the UpdateCoverageBenefitItemLimitList record collection.</description>
+        <name>UpdateCoverageBenefitItemLimits</name>
+        <label>Update Coverage Benefit Item Limits</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>DoesCoverageBenefitItemRequireAnUpdate</targetReference>
+        </connector>
+        <inputReference>UpdateCoverageBenefitItemLimitList</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>WaitforPayerAssessmentResponse</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Stores the body of the text template notifying the user that the Payer assessment response timed out.</description>
+        <name>PayerAssessmentResponseTimedoutTextTemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Failed::Connect with the payor to get the latest benefits.</text>
+    </textTemplates>
+    <variables>
+        <description>Stores the ID of the Assessment record that contains the questions that were answered.</description>
+        <name>AssessmentId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the name of the Assessment Question Response.</description>
+        <name>AssessmentQuestionName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the care benefit verify request ID that was passed into this flow.</description>
+        <name>careBenefitVerifyRequestId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CareLimitTypesName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the Coverage Benefit record.</description>
+        <name>CoverageBenefit</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>CoverageBenefit</objectType>
+    </variables>
+    <variables>
+        <description>Stores the ID of the Coverage Benefit Item record that is associated with the Care Benefit Verify Request record.</description>
+        <name>CoverageBenefitItemId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the ID of the related object for the flow orchestrator instance and is passed into the flow.</description>
+        <name>flowOrchestratorInstanceRelatedObjectId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Stores a boolean value that indicates whether the Coverage Benefit Item record requires an update. The default value is False.</description>
+        <name>IsCoverageBenefitItemRequiresSave</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Stores a boolean value that indicates whether the Coverage Benefit record requires an update. The default value is False.</description>
+        <name>IsCoverageBenefitRequiresSave</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Stores a boolean value that indicates whether the Payer assessment response was received and is available as output from the flow.</description>
+        <name>isPayorAssessmentResponseReceived</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Stores the step number of the benefit verification process that is passed into the flow.</description>
+        <name>stepNumber</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <description>Stores the updated Coverage Benefit Item record.</description>
+        <name>UpdateCoverageBenefitItem</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>CoverageBenefitItem</objectType>
+    </variables>
+    <variables>
+        <name>UpdateCoverageBenefitItemLimit</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>CoverageBenefitItemLimit</objectType>
+    </variables>
+    <variables>
+        <name>UpdateCoverageBenefitItemLimitList</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>CoverageBenefitItemLimit</objectType>
+    </variables>
+    <variables>
+        <name>UpdatedCoverageBenefit</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>CoverageBenefit</objectType>
+    </variables>
+    <variables>
+        <description>Stores the version number of the Assessment record.</description>
+        <name>VersionNumber</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <waits>
+        <description>Pauses the flow until a Care Benefit Verify Request Status Change event is received where the event’s request identifier matches the careBenefitVerifyRequestId variable and a status that indicates the Payer assessment response was received. If a response isn’t received, the flow resumes after 30 days and saves an error message. To use a different time-out period, update the Time Offset and Time Offset Unit fields in the TimeOut For Payer Assessment Response wait event.</description>
+        <name>WaitforPayerAssessmentResponse</name>
+        <label>Wait for Payer Assessment Response</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
+        <waitEvents>
+            <name>IsPayerAssessmentResponseReceived</name>
+            <conditionLogic>and</conditionLogic>
+            <connector>
+                <targetReference>SetPayerAssessmentResponseStatus</targetReference>
+            </connector>
+            <eventType>CareBnftVrfyRqstStsChgEvent</eventType>
+            <inputParameters>
+                <name>RecordIdentifier</name>
+                <value>
+                    <elementReference>careBenefitVerifyRequestId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>Status</name>
+                <value>
+                    <elementReference>PayerAssessmentResponseReceivedEventStatus</elementReference>
+                </value>
+            </inputParameters>
+            <label>Payer Assessment Response Received</label>
+        </waitEvents>
+        <waitEvents>
+            <name>IsPayerAssessmentResponseTimedOut</name>
+            <conditionLogic>and</conditionLogic>
+            <connector>
+                <targetReference>SetPayerAssessmentResponseStatusFalse</targetReference>
+            </connector>
+            <eventType>AlarmEvent</eventType>
+            <inputParameters>
+                <name>AlarmTime</name>
+                <value>
+                    <elementReference>$Flow.InterviewStartTime</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>30.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Days</stringValue>
+                </value>
+            </inputParameters>
+            <label>Payer Assessment Response Timed Out</label>
+        </waitEvents>
+    </waits>
+</Flow>

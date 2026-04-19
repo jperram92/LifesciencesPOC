@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ActlFirstPtcpEnrlDate</fullName>
+    <inlineHelpText>The actual date when the first participant was enrolled in the study at any of the participating clinical trial sites.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

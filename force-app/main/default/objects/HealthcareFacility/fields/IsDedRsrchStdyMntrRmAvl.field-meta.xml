@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsDedRsrchStdyMntrRmAvl</fullName>
+    <inlineHelpText>Indicates whether a dedicated room is available at the healthcare facility to monitor the research study.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

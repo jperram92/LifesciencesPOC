@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ActualFinalDbLockDate</fullName>
+    <inlineHelpText>The actual date on which the final database lock is implemented across all the clinical trial sites. The data collection is completed by this date, and the collected data cannot be changed after this date.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>
