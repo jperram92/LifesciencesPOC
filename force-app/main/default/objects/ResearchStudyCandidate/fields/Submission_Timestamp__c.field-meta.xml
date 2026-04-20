@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Submission_Timestamp__c</fullName>
+    <description>System-set UTC timestamp of the moment the screener was finalised and submitted. Set by Apex — never editable by users. Satisfies the When requirement of 21 CFR Part 11 electronic record integrity.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Read-only. Set automatically when the coordinator submits the eligibility screener.</inlineHelpText>
+    <label>Submission Timestamp</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

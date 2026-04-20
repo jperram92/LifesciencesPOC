@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Eligibility_Status__c</fullName>
+    <description>Tracks the lifecycle stage of the eligibility screening process for this candidate. Locked after Submitted via GxP_Record_Lock validation rule.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Set automatically by the Protocol Eligibility Screener flow. Do not modify manually after submission.</inlineHelpText>
+    <label>Eligibility Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>In Progress</fullName>
+                <default>true</default>
+                <label>In Progress</label>
+            </value>
+            <value>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+                <label>Submitted</label>
+            </value>
+            <value>
+                <fullName>Eligible</fullName>
+                <default>false</default>
+                <label>Eligible</label>
+            </value>
+            <value>
+                <fullName>Ineligible</fullName>
+                <default>false</default>
+                <label>Ineligible</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

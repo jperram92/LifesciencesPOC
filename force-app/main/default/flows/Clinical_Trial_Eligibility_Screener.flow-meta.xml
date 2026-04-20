@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+
+    <!-- ── Apex Action ─────────────────────────────────────────── -->
+    <actionCalls>
+        <name>Apex_ScoreEligibility</name>
+        <label>Score Protocol Eligibility</label>
+        <locationX>176</locationX>
+        <locationY>890</locationY>
+        <actionName>ProtocolEligibilityScoringEngine</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Decision_EligibilityOutcome</targetReference>
+        </connector>
+        <inputParameters>
+            <name>candidateId</name>
+            <value>
+                <elementReference>varCandidateId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>researchStudyId</name>
+            <value>
+                <elementReference>varResearchStudyId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>careProgramId</name>
+            <value>
+                <elementReference>varCareProgramId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>priorCancerHistory</name>
+            <value>
+                <elementReference>inpPriorCancerHistory</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentMedications</name>
+            <value>
+                <elementReference>inpCurrentMedications</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>coordinatorUserId</name>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>signatureCaptured</name>
+            <value>
+                <elementReference>inpElectronicSignature</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>varIsEligible</assignToReference>
+            <name>isEligible</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varEligibilityStatus</assignToReference>
+            <name>eligibilityStatus</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varFailureCode</assignToReference>
+            <name>protocolFailureCode</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varDisqualificationReason</assignToReference>
+            <name>disqualificationReason</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varEnrolleeId</assignToReference>
+            <name>careProgramEnrolleeId</name>
+        </outputParameters>
+    </actionCalls>
+
+    <!-- ── Assignment (screen 4 connector goes straight to Apex) ─ -->
+
+    <!-- ── Choices ────────────────────────────────────────────── -->
+    <choices>
+        <name>choiceYes</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+
+    <choices>
+        <name>choiceNo</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+
+    <!-- ── Decision ───────────────────────────────────────────── -->
+    <decisions>
+        <name>Decision_EligibilityOutcome</name>
+        <label>Eligibility Outcome</label>
+        <locationX>176</locationX>
+        <locationY>1010</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Ineligible</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Ineligible</defaultConnectorLabel>
+        <rules>
+            <name>Outcome_Eligible</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varIsEligible</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Eligible</targetReference>
+            </connector>
+            <label>Eligible</label>
+        </rules>
+    </decisions>
+
+    <description>GxP-compliant Protocol Eligibility Screener for clinical trial candidates. Satisfies 21 CFR Part 11.</description>
+    <environments>Default</environments>
+
+
+    <interviewLabel>Clinical Trial Eligibility Screener {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Clinical Trial Eligibility Screener</label>
+
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+
+    <!-- ── Record Lookups ────────────────────────────────────── -->
+    <recordLookups>
+        <name>GetCandidate</name>
+        <label>Get Candidate Record</label>
+        <locationX>176</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>GetStudy</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varCandidateId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>ResearchStudyCandidate</object>
+        <outputAssignments>
+            <assignToReference>varResearchStudyId</assignToReference>
+            <field>ResearchStudyId</field>
+        </outputAssignments>
+    </recordLookups>
+
+    <recordLookups>
+        <name>GetStudy</name>
+        <label>Get Research Study</label>
+        <locationX>176</locationX>
+        <locationY>170</locationY>
+        <connector>
+            <targetReference>Screen_CandidateConfirmation</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varResearchStudyId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>ResearchStudy</object>
+        <outputAssignments>
+            <assignToReference>varStudyName</assignToReference>
+            <field>Name</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>varStudyMinAge</assignToReference>
+            <field>EligibleMinimumAge</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>varStudyMaxAge</assignToReference>
+            <field>EligibleMaximumAge</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>varCareProgramId</assignToReference>
+            <field>CareProgramId</field>
+        </outputAssignments>
+    </recordLookups>
+
+    <runInMode>SystemModeWithoutSharing</runInMode>
+
+    <!-- ── Screens (all grouped together) ────────────────────── -->
+
+    <!-- Screen 1: Candidate Confirmation -->
+    <screens>
+        <name>Screen_CandidateConfirmation</name>
+        <label>Candidate Confirmation</label>
+        <locationX>176</locationX>
+        <locationY>290</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Screen_InclusionCriteria</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayStudyInfo</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Clinical Trial Eligibility Screener&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Study: &lt;b&gt;{!varStudyName}&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Age Eligibility: &lt;b&gt;{!varStudyMinAge}&amp;ndash;{!varStudyMaxAge} years&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Please confirm the candidate identity before proceeding. This screener is a regulated electronic record under 21 CFR Part 11.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>chkIdentityConfirmed</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <booleanValue>false</booleanValue>
+            </defaultValue>
+            <fieldText>I confirm that I have verified the candidate&apos;s identity and this screener relates to the correct participant record.</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- Screen 2: Inclusion Criteria -->
+    <screens>
+        <name>Screen_InclusionCriteria</name>
+        <label>Inclusion Criteria</label>
+        <locationX>176</locationX>
+        <locationY>410</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Screen_MedicalHistory</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayInclusionHeader</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Section 1: Inclusion Criteria&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Answer each question based on the candidate&apos;s current clinical status.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>inpAgeConfirmed</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <booleanValue>false</booleanValue>
+            </defaultValue>
+            <fieldText>Candidate is aged between {!varStudyMinAge} and {!varStudyMaxAge} years (inclusive)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>inpGenderConfirmed</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <booleanValue>false</booleanValue>
+            </defaultValue>
+            <fieldText>Candidate meets the gender eligibility requirement for this protocol</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- Screen 3: Medical History / Exclusion Criteria -->
+    <screens>
+        <name>Screen_MedicalHistory</name>
+        <label>Medical History and Exclusion Criteria</label>
+        <locationX>176</locationX>
+        <locationY>530</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Screen_SummaryAndSignature</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayExclusionHeader</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Section 2: Exclusion Criteria - Medical History&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;The following questions identify factors that would exclude this candidate from the study.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>inpPriorCancerHistory</name>
+            <choiceReferences>choiceYes</choiceReferences>
+            <choiceReferences>choiceNo</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>choiceNo</defaultSelectedChoiceReference>
+            <fieldText>Does the candidate have a prior history of cancer?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>inpCurrentMedications</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <stringValue>None</stringValue>
+            </defaultValue>
+            <fieldText>List any current medications that may conflict with the protocol (enter None if not applicable)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- Screen 4: Summary and Electronic Signature -->
+    <screens>
+        <name>Screen_SummaryAndSignature</name>
+        <label>Summary and Electronic Signature</label>
+        <locationX>176</locationX>
+        <locationY>650</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Apex_ScoreEligibility</targetReference>
+        </connector>
+        <fields>
+            <name>DisplaySummaryHeader</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Screener Summary - Please Review Before Submitting&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Study: &lt;b&gt;{!varStudyName}&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Age Eligibility Confirmed: &lt;b&gt;{!inpAgeConfirmed}&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Gender Eligibility Confirmed: &lt;b&gt;{!inpGenderConfirmed}&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Prior Cancer History: &lt;b&gt;{!inpPriorCancerHistory}&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Current Medications: &lt;b&gt;{!inpCurrentMedications}&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;WARNING: Once submitted, this record is locked per 21 CFR Part 11. Verify all responses are accurate.&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>inpElectronicSignature</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <booleanValue>false</booleanValue>
+            </defaultValue>
+            <fieldText>By checking this box, I confirm that the information entered above is accurate and complete. This constitutes a legally binding electronic signature under 21 CFR Part 11, capturing my intent and authority as the site coordinator for this screening submission.</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- Screen 5a: Eligible -->
+    <screens>
+        <name>Screen_Eligible</name>
+        <label>Candidate Eligible</label>
+        <locationX>50</locationX>
+        <locationY>1130</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>DisplayEligible</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Candidate is ELIGIBLE for this study.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;A Care Program Enrollee record has been created. The participant may now proceed to the consent process.&lt;/p&gt;
+&lt;p&gt;Enrollee Record ID: {!varEnrolleeId}&lt;/p&gt;
+&lt;p&gt;This submission is locked as a GxP electronic record per 21 CFR Part 11.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- Screen 5b: Ineligible -->
+    <screens>
+        <name>Screen_Ineligible</name>
+        <label>Candidate Ineligible</label>
+        <locationX>302</locationX>
+        <locationY>1130</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>DisplayIneligible</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Candidate does NOT meet eligibility criteria.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Failure Code: &lt;b&gt;{!varFailureCode}&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Reason: {!varDisqualificationReason}&lt;/p&gt;
+&lt;p&gt;This result has been recorded on the candidate record per site SOP.&lt;/p&gt;
+&lt;p&gt;This submission is locked as a GxP electronic record per 21 CFR Part 11.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- ── Start ──────────────────────────────────────────────── -->
+    <start>
+        <locationX>176</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>GetCandidate</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+
+    <!-- ── Variables ─────────────────────────────────────────── -->
+    <variables>
+        <name>varCandidateId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>varCareProgramId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>varDisqualificationReason</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+
+    <variables>
+        <name>varEligibilityStatus</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+
+    <variables>
+        <name>varEnrolleeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+
+    <variables>
+        <name>varFailureCode</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+
+    <variables>
+        <name>varIsEligible</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+
+    <variables>
+        <name>varResearchStudyId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>varScreenerJsonResponses</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>{}</stringValue>
+        </value>
+    </variables>
+
+    <variables>
+        <name>varStudyMaxAge</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>varStudyMinAge</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>varStudyName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+</Flow>

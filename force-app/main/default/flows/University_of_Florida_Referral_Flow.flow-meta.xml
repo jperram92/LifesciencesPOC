@@ -74,6 +74,9 @@
         <connector>
             <targetReference>successMsgInfo</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Screen_UpdateError</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -90,6 +93,26 @@
         </inputAssignments>
         <object>ResearchStudyCandidate</object>
     </recordUpdates>
+    <screens>
+        <name>Screen_UpdateError</name>
+        <label>Error Updating Candidate</label>
+        <locationX>374</locationX>
+        <locationY>542</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>DisplayErrorMsg</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Unable to accept this referral.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;The candidate&apos;s current status does not allow a direct transition to &quot;Referral Accepted&quot;. This is controlled by the Stage Path configuration in your org.&lt;/p&gt;
+&lt;p&gt;Please contact your Salesforce administrator to configure the allowed stage transitions, or manually update the candidate status before accepting the referral.&lt;/p&gt;
+&lt;p&gt;Error detail: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+
     <screens>
         <name>ReferralInfo</name>
         <label>Referral Information</label>

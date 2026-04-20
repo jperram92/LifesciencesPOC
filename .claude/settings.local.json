@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -v \"^$\")",
+      "Bash(grep \"__c$\")",
+      "Bash(xargs -I {} basename {})"
+    ]
+  }
+}

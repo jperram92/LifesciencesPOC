@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GxP_Record_Lock</fullName>
+    <active>true</active>
+    <description>GxP / 21 CFR Part 11: locks record once Eligibility_Status__c = Submitted. Amendments require a new record with documented justification.</description>
+    <errorConditionFormula>AND(
+  PRIORVALUE(Eligibility_Status__c) = "Submitted",
+  NOT(ISNEW())
+)</errorConditionFormula>
+    <errorDisplayField>Eligibility_Status__c</errorDisplayField>
+    <errorMessage>This record has been submitted and is locked per GxP / 21 CFR Part 11 requirements. To amend, create a new candidate record and document the reason for change.</errorMessage>
+</ValidationRule>

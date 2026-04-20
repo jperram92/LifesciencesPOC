@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Screener_JSON_Responses__c</fullName>
+    <description>Immutable JSON snapshot of all question-and-answer pairs captured during the eligibility screener. Stored for audit reconstruction — allows regulators to replay the exact data presented to the scoring engine without relying on separate systems.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Read-only. System-generated JSON of all screener responses. Do not edit.</inlineHelpText>
+    <label>Screener JSON Responses</label>
+    <length>131072</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

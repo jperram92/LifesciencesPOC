@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disqualification_Reason__c</fullName>
+    <description>Mandatory narrative explaining why this candidate did not meet protocol eligibility criteria. Required when Eligibility_Status__c = Ineligible. Part of 21 CFR Part 11 audit trail (the Why).</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Populated automatically by the scoring engine. Records the specific protocol exclusion criterion that was not met.</inlineHelpText>
+    <label>Disqualification Reason</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>4</visibleLines>
+</CustomField>
