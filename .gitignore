@@ -42,6 +42,11 @@ $RECYCLE.BIN/
 # Local environment variables
 .env
 
+# MCP config (contains API tokens)
+.mcp.json
+mcp.json
+.vscode/mcp.json
+
 # Python Salesforce Functions
 **/__pycache__/
 **/.venv/
